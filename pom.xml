@@ -11,7 +11,7 @@
     <artifactId>javafx</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>javafx</name>
-    <description>Demo project for Spring Boot</description>
+    <description>App zum Verwalten der Reservierungen von Theateraufführungen</description>
     <properties>
         <java.version>15</java.version>
     </properties>

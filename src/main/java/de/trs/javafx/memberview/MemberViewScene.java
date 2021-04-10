@@ -26,9 +26,9 @@ public class MemberViewScene extends Scene {
      */
     public MemberViewScene() throws IOException {
 
-        super(loadFXML("MainFrame"));
+        super(loadFXML("/fxml/MainFrame"));
         // this.memberViewPane = (MemberViewPane) loadFXML("MainFrame");
-        // this.memberViewPane = getRoot();
+        // this.memberViewPane = (MemberViewPane) getRoot();
 
     }
 

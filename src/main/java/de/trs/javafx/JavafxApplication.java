@@ -37,7 +37,6 @@ public class JavafxApplication extends Application {
 
     // @Autowired
     private Stage memberViewStage;
-    private Scene scene = null;
 
     /**
      * Standardisierte Methode welche von der JavaFX Parent-Klasse Application
@@ -54,11 +53,10 @@ public class JavafxApplication extends Application {
             this.memberViewStage = primaryStage;
             this.memberViewStage.setTitle("Theater Reservation Service");
             log.info("START Scene");
-            // this.memberViewStage.setScene(getMemberViewScene());
-            this.memberViewStage.setScene(getScene());
+            this.memberViewStage.setScene(getMemberViewScene());
             log.info("START .show()");
             this.memberViewStage.show();
-            log.info("FINISCH start()");
+            log.info("FINISHED start()");
         } catch (Exception e) {
             log.error("Could not finisch start()", e);
             log.error(e.getMessage());
@@ -71,18 +69,6 @@ public class JavafxApplication extends Application {
             logout(memberViewStage);
             event.consume();
         });
-    }
-
-    public Scene getScene() {
-        try {
-            if (scene == null) {
-                log.info("SCENE start new Scene");
-                scene = new Scene(loadFXML("/fxml/MainFrame"));
-            }
-        } catch (Exception e) {
-            log.error("Could not set FXML Scene", e);
-        }
-        return scene;
     }
 
     /**
@@ -119,21 +105,10 @@ public class JavafxApplication extends Application {
         if (alert.showAndWait().get() == ButtonType.OK) {
 
             log.info("CLOSING confirmed");
-            System.out.println("Logout complete");
             stage.close();
+        } else {
+            log.info("CLOSING aborted");
         }
-        log.info("CLOSING aborted");
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        log.info("LOADING Try loading fxml Filer: " + fxml);
-        try {
-            log.info((JavafxApplication.class.getResource(fxml + ".fxml")).toString());
-        } catch (Exception e) {
-            log.error("Nullpointer", e);
-        }
-        FXMLLoader fxmlLoader = new FXMLLoader(JavafxApplication.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
     }
 
     /**
@@ -159,14 +134,9 @@ public class JavafxApplication extends Application {
     // log.info("BEGIN Changeing scene to create");
     // primaryStage.setScene(getCreateScene());
     // log.info("END Changeing scene to create");
-
     // });
     // }
     // return searchPaneScene;
-    // }
-
-    // public void setSearchPaneScene(SearchPaneScene searchPaneScene) {
-    // this.searchPaneScene = searchPaneScene;
     // }
 
     // public CreateScene getCreateScene() {
@@ -181,9 +151,4 @@ public class JavafxApplication extends Application {
     // }
     // return createScene;
     // }
-
-    // public void setCreateScene(CreateScene createScene) {
-    // this.createScene = createScene;
-    // }
-
 }
