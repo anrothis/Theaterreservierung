@@ -7,11 +7,7 @@ import org.springframework.stereotype.Component;
 import de.trs.javafx.memberview.MemberViewScene;
 // import de.trs.javafx.create.CreateScene;
 // import de.trs.javafx.memberview.MemberViewScene;
-// import de.trs.javafx.searchpane.SearchPaneScene;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -117,6 +113,7 @@ public class JavafxApplication extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+
     }
 
     // @Override
