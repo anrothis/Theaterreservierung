@@ -18,14 +18,6 @@ public class DbConfig {
     @Bean
     CommandLineRunner commandLineRunner(MemberRepository memberRepository, EventRepository eventRepository) {
         return args -> {
-            // Mitglied sebastian = new Mitglied("Sebastian", "Riedel", "9c");
-            // Mitglied juli = new Mitglied("Juli", "Zwei", "9b");
-            // Mitglied dom = new Mitglied("Dom", "Wi", "23g");
-            // memberRepository.saveAll(List.of(sebastian, juli, dom));
-            // Event event1 = new Event("Superman", "Immenstadt");
-            // Event event2 = new Event("Shakespear", "Immenstadt");
-            // Event event3 = new Event("Spiderman", "Sonthofen");
-            // eventRepository.saveAll(List.of(event1, event2, event3));
 
             memberRepository.saveAll(CsvHandler.PareseMemberList.getMemberfromCSV("members.csv", true));
             eventRepository.saveAll(CsvHandler.ParseEventList.getEventfromCSV("eventsLong.csv", true));

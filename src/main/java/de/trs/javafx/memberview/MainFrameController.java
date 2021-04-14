@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import de.trs.javafx.dbcontroller.DbService;
 import de.trs.javafx.dbcontroller.MemberRepository;
-import de.trs.javafx.model.CsvHandler;
 import de.trs.javafx.model.Mitglied;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -109,7 +107,7 @@ public class MainFrameController implements Initializable {
         seatTableColumn.setCellValueFactory(new PropertyValueFactory<Mitglied, String>("seat"));
 
         /**
-         * Initialisierung der Sahlbelegungsplansliste
+         * Initialisierung der Sahlbelegungsplanliste
          */
         seatHallColumn.setCellValueFactory(new PropertyValueFactory<>("seat"));
         nnameHallColumn.setCellValueFactory(new PropertyValueFactory<>("nName"));
@@ -118,41 +116,10 @@ public class MainFrameController implements Initializable {
         /**
          * test Initialisierung //TODO: entfernen der Testinitialisierung
          */
-        // Mitglied a = new Mitglied(1L, "Rie", "Seb", "zepp", "123", "DD", "09744",
-        // "email", "9e");
-        // Mitglied b = new Mitglied(1L, "Zwei", "Jul", "zepp", "123", "DD", "0945764",
-        // "email@rtrt-de", "22f");
-        // Mitglied c = new Mitglied(1L, "Wi", "Do", "asdlfj", "45", "N", "159485",
-        // "dowi@hor.de", "19c");
-        // listC = new ArrayList<Mitglied>();
-        // listC.add(a);
-        // listC.add(b);
-        // listC.add(c);
 
         listC = (ArrayList<Mitglied>) dbService.getMembers();
-        // listC = (ArrayList<Mitglied>) memberRepository.findAll();
-        // listC = getMemberfromCSV();
-        listCustomers(listC);
-    }
 
-    private ArrayList<Mitglied> getMemberfromCSV() {
-        List<List<String>> memberListCSV;
-        memberListCSV = CsvHandler.readCSV("members.csv", true);
-        if (memberListCSV == null) {
-            memberListCSV = new ArrayList<List<String>>();
-            List<String> memberCSV = new ArrayList<String>();
-            memberCSV.add("Seb");
-            memberCSV.add("Ried");
-            memberCSV.add("3d");
-            memberCSV.add("");
-            memberListCSV.add(memberCSV);
-        }
-        ArrayList<Mitglied> memberList = new ArrayList<Mitglied>();
-        for (List<String> list : memberListCSV) {
-            memberList.add(new Mitglied(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5),
-                    list.get(6), list.get(7)));
-        }
-        return memberList;
+        listCustomers(listC);
     }
 
     public MemberRepository getMemberRepository() {

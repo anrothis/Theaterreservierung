@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import de.trs.javafx.memberview.MemberViewScene;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -107,6 +107,16 @@ public class JavafxApplication extends Application {
         }
     }
 
+    /**
+     * init() Methode wird nach dem in der main() Fuktion aufgerufenen
+     * Application.launch() aufgerufen. Hier wird zuerst der Applicatio Context
+     * initialisiert, welche sich um die automatische anlegen der Klassen im
+     * Hintergrund kümmert. Zusätzlich werden noch einige Erweiterungen gestartet,
+     * wie zum Beispiel das Anlegen der Datenbank. Anschließend wird die für die UI
+     * benötigten FXML Dateien geladen.
+     * 
+     * @return Parent Root als Basis für den weiteren Aufbau der UI
+     */
     @Override
     public void init() throws Exception {
 
@@ -118,7 +128,12 @@ public class JavafxApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(fxml_path);
 
         log.info("LOADING ApplicationContext");
-        fxmlLoader.setControllerFactory(param -> context.getBean(param));
+        fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+            @Override
+            public Object call(Class<?> param) {
+                return context.getBean(param);
+            }
+        }); // vorzeitiges setzen der Controller
 
         log.info("LOADING FXML PARENT ROOT");
         root = fxmlLoader.load();
