@@ -1,6 +1,6 @@
 package de.trs.javafx.create;
 
-import de.trs.javafx.model.Member;
+import de.trs.javafx.model.Mitglied;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -112,7 +112,7 @@ public class CreateInputPane extends GridPane {
         this.seatInput = seatInput;
     }
 
-    public Member memeber() {
-        return new Member(getVnameInput().getText(), getNnameInput().getText(), getSeatInput().getText());
+    public Mitglied memeber() {
+        return new Mitglied(getVnameInput().getText(), getNnameInput().getText(), getSeatInput().getText());
     }
 }

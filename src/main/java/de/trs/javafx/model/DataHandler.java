@@ -12,37 +12,34 @@ import javafx.collections.ObservableList;
 public enum DataHandler {
     INSTANCE;
 
-    private List<Member> member = null;
+    private List<Mitglied> mitglied = null;
 
-    private List<Member> getMember() {
-        if (member == null) {
-            member = new ArrayList<Member>();
-            member.add(new Member("Seb", "Ried", "3d"));
-            member.add(new Member("Jul", "Zwei", "6g"));
+    private List<Mitglied> getMitglied() {
+        if (mitglied == null) {
+            mitglied = new ArrayList<Mitglied>();
+            mitglied.add(new Mitglied("Seb", "Ried", "3d"));
+            mitglied.add(new Mitglied("Jul", "Zwei", "6g"));
 
         }
-        return member;
+        return mitglied;
     }
 
-    public void createMember(Member member) {
-        getMember().add(member);
+    public void createMitglied(Mitglied mitglied) {
+        getMitglied().add(mitglied);
     }
 
-    public void deleteMember(Member member) {
-        getMember().remove(member);
+    public void deleteMitglied(Mitglied mitglied) {
+        getMitglied().remove(mitglied);
     }
 
     /**
      * ObservableList wird von JavaFX TableView erwartet
+     * 
+     * TODO: migrate to MainFrameController
      */
-    public ObservableList<Member> membersAsObservableList() {
-        ObservableList<Member> observableList = FXCollections.observableList(getMember());
+    public ObservableList<Mitglied> mitgliedAsObservableList() {
+        ObservableList<Mitglied> observableList = FXCollections.observableList(getMitglied());
         return observableList;
 
     }
-
-    private void setMember(List<Member> member) {
-        this.member = member;
-    }
-
 }

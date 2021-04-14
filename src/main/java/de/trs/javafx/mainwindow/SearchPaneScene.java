@@ -1,4 +1,4 @@
-package de.trs.javafx.searchpane;
+package de.trs.javafx.mainwindow;
 
 import javafx.scene.Scene;
 

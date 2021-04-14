@@ -1,13 +1,17 @@
 package de.trs.javafx;
 
-import java.io.IOException;
+import java.net.URL;
 
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import de.trs.javafx.memberview.MemberViewScene;
-// import de.trs.javafx.create.CreateScene;
-// import de.trs.javafx.memberview.MemberViewScene;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -15,24 +19,19 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@SpringBootApplication
 public class JavafxApplication extends Application {
 
-    // private SearchPaneScene searchPaneScene = null;
-    // private CreateScene createScene = null;
-    // private Stage primaryStage;
-
     /**
-     * Second Window integration
+     * Window integration
      * 
      * @Autowired erstellt automatisch eine Instanz der Classe und und setellt diese
      *            zur Verfügung
      */
-    // @Autowired
-    private MemberViewScene memberViewScene;
-
-    // @Autowired
+    // private MemberViewScene memberViewScene;
+    private Parent root;
     private Stage memberViewStage;
+    private ConfigurableApplicationContext context;
 
     /**
      * Standardisierte Methode welche von der JavaFX Parent-Klasse Application
@@ -44,14 +43,16 @@ public class JavafxApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-
             log.info("START Stage");
             this.memberViewStage = primaryStage;
             this.memberViewStage.setTitle("Theater Reservation Service");
+
             log.info("START Scene");
-            this.memberViewStage.setScene(getMemberViewScene());
+            this.memberViewStage.setScene(new Scene(root));
+
             log.info("START .show()");
             this.memberViewStage.show();
+
             log.info("FINISHED start()");
         } catch (Exception e) {
             log.error("Could not finisch start()", e);
@@ -61,14 +62,14 @@ public class JavafxApplication extends Application {
          * Beim versuch die Applikation zu schließen wird logout() ausgeführt. Das Event
          * wird bei nicht OK consumiert und der Vorgang somit abgebrochen.
          */
-        this.memberViewStage.setOnCloseRequest(event -> {
-            logout(memberViewStage);
-            event.consume();
-        });
+        // this.memberViewStage.setOnCloseRequest(event -> {
+        // logout(memberViewStage);
+        // event.consume();
+        // });
     }
 
     /**
-     * Getter Methode des MemberViewScene Objects
+     * Getter Methode des MemberViewScene Objects als Singleton Pattern
      * 
      * Prüft, ob bereits ein Object der zugrunde liegenden Klasse erstellt wurde,
      * initialisiert diese gegebenen falls und gibt sie zurück
@@ -76,12 +77,12 @@ public class JavafxApplication extends Application {
      * @return Object vom Typ MemberViewScene
      * @throws IOException
      */
-    private MemberViewScene getMemberViewScene() throws IOException {
-        if (memberViewScene == null) {
-            memberViewScene = new MemberViewScene();
-        }
-        return memberViewScene;
-    }
+    // private MemberViewScene getMemberViewScene() throws IOException {
+    // if (memberViewScene == null) {
+    // memberViewScene = new MemberViewScene();
+    // }
+    // return memberViewScene;
+    // }
 
     /**
      * Sicherheitsabfrage beim beenden der Applikation
@@ -99,7 +100,6 @@ public class JavafxApplication extends Application {
         alert.setContentText("Fortfahren? ");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-
             log.info("CLOSING confirmed");
             stage.close();
         } else {
@@ -107,13 +107,38 @@ public class JavafxApplication extends Application {
         }
     }
 
+    @Override
+    public void init() throws Exception {
+
+        this.context = SpringApplication.run(JavafxApplication.class);
+        log.info("START LOADING FXML: ");
+        URL fxml_path = JavafxApplication.class.getResource("/fxml/MainFrame.fxml");
+
+        log.info("LOADING FXML: " + fxml_path);
+        FXMLLoader fxmlLoader = new FXMLLoader(fxml_path);
+
+        log.info("LOADING ApplicationContext");
+        fxmlLoader.setControllerFactory(param -> context.getBean(param));
+
+        log.info("LOADING FXML PARENT ROOT");
+        root = fxmlLoader.load();
+
+        log.info("DONE LOADING FXML PARENT ROOT");
+        log.info("INITIALIZATION JavaFx got initialized");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        context.close();
+        Platform.exit();
+    }
+
     /**
      * In der main() Methode wird lediglich der Start vorbereitet und ruft im
      * Anschluss start() auf
      */
     public static void main(String[] args) {
-        launch(args);
-
+        Application.launch(args);
     }
 
     // @Override

@@ -1,8 +1,21 @@
 package de.trs.javafx.model;
 
-public class Mitglied {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Mitglied implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true, nullable = false)
     private long id;
+
     private String nName;
     private String vName;
     private String street;
@@ -10,9 +23,16 @@ public class Mitglied {
     private String town;
     private String telephone;
     private String email;
+    @Column(unique = true)
     private String seat;
 
     public Mitglied() {
+    }
+
+    public Mitglied(String nName, String vName, String seat) {
+        this.nName = nName;
+        this.vName = vName;
+        this.seat = seat;
     }
 
     public Mitglied(long id, String nName, String vName, String street, String zipCode, String town, String telephone,
@@ -94,8 +114,15 @@ public class Mitglied {
 
     @Override
     public String toString() {
-        return "Customer [email=" + email + ", id=" + id + ", nName=" + nName + ", seat=" + seat + ", street=" + street
+        return "Member [email=" + email + ", id=" + id + ", nName=" + nName + ", seat=" + seat + ", street=" + street
                 + ", telephone=" + telephone + ", town=" + town + ", vName=" + vName + ", zipCode=" + zipCode + "]";
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

@@ -1,10 +1,10 @@
-package de.trs.javafx.searchpane;
+package de.trs.javafx.mainwindow;
 
 import java.util.Optional;
 
 import de.trs.javafx.SceneChangeEvent;
 import de.trs.javafx.model.DataHandler;
-import de.trs.javafx.model.Member;
+import de.trs.javafx.model.Mitglied;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -52,16 +52,12 @@ public class LeftPane extends VBox {
         return buttonCreateMember;
     }
 
-    private void setButtenCreateMember(Button buttenCreateMember) {
-        this.buttonCreateMember = buttenCreateMember;
-    }
-
     public Button getButtonDeleteMember() {
         if (buttonDeleteMember == null) {
             buttonDeleteMember = new Button("Mitglied löschen");
             buttonDeleteMember.setOnAction(e -> {
                 log.info("BEGIN Mitglied loeschen");
-                Member selectedMember = (Member) overviewTableView.getSelectionModel().getSelectedItem();
+                Mitglied selectedMember = (Mitglied) overviewTableView.getSelectionModel().getSelectedItem();
 
                 if (selectedMember == null) {
                     log.info("Kein Mitglied ausgewaehlt");
@@ -78,8 +74,8 @@ public class LeftPane extends VBox {
                 Optional<ButtonType> buttonType = alert.showAndWait();
                 log.info("ButtonType: " + buttonType.get().getText());
                 if (buttonType.get() == ButtonType.OK) {
-                    DataHandler.INSTANCE.deleteMember(selectedMember);
-                    overviewTableView.setItems(DataHandler.INSTANCE.membersAsObservableList());
+                    DataHandler.INSTANCE.deleteMitglied(selectedMember);
+                    overviewTableView.setItems(DataHandler.INSTANCE.mitgliedAsObservableList());
                 } else {
                     log.info("Loeschvorgang abgebrochen");
                 }
@@ -88,9 +84,5 @@ public class LeftPane extends VBox {
             });
         }
         return buttonDeleteMember;
-    }
-
-    private void setButtonDeleteMember(Button buttonDeleteMember) {
-        this.buttonDeleteMember = buttonDeleteMember;
     }
 }

@@ -2,7 +2,6 @@ package de.trs.javafx.create;
 
 import de.trs.javafx.SceneChangeEvent;
 import de.trs.javafx.model.DataHandler;
-import de.trs.javafx.model.Member;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +41,7 @@ public class CreateBottomPane extends HBox {
             ok = new Button("Bestätigen");
             ok.setOnAction(e -> {
                 log.info("Mitglied angelegt");
-                DataHandler.INSTANCE.createMember(createInputPane.memeber());
+                DataHandler.INSTANCE.createMitglied(createInputPane.memeber());
                 fireEvent(new SceneChangeEvent(SceneChangeEvent.GO_TO_OVERVIEW_SCENE));
             });
         }

@@ -1,4 +1,4 @@
-package de.trs.javafx.searchpane;
+package de.trs.javafx.mainwindow;
 
 import de.trs.javafx.model.DataHandler;
 import javafx.scene.layout.BorderPane;
@@ -28,13 +28,9 @@ public class SearchPane extends BorderPane {
         return leftPane;
     }
 
-    private void setLeftPane(LeftPane leftPane) {
-        this.leftPane = leftPane;
-    }
-
     public OverviewTableView getOverviewTableView() {
         if (overviewTableView == null) {
-            overviewTableView = new OverviewTableView(DataHandler.INSTANCE.membersAsObservableList());
+            overviewTableView = new OverviewTableView(DataHandler.INSTANCE.mitgliedAsObservableList());
         }
         return overviewTableView;
     }
@@ -44,7 +40,7 @@ public class SearchPane extends BorderPane {
     }
 
     public void refreshDate() {
-        getOverviewTableView().setItems(DataHandler.INSTANCE.membersAsObservableList());
+        getOverviewTableView().setItems(DataHandler.INSTANCE.mitgliedAsObservableList());
     }
 
 }
