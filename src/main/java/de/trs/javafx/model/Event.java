@@ -1,8 +1,7 @@
 package de.trs.javafx.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +36,12 @@ public class Event implements Serializable {
     /** reduzierter Konstruktor zu Testzwecken */
     public Event(String name, String location) {
         this.name = name;
+        this.location = location;
+    }
+
+    public Event(String name, Date performanceDate, String location) {
+        this.name = name;
+        this.performanceDate = performanceDate;
         this.location = location;
     }
 

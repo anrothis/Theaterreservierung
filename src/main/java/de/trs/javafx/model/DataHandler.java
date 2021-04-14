@@ -12,16 +12,16 @@ import javafx.collections.ObservableList;
 public enum DataHandler {
     INSTANCE;
 
-    private List<Mitglied> mitglied = null;
+    private List<Mitglied> mitgliedList = null;
 
     private List<Mitglied> getMitglied() {
-        if (mitglied == null) {
-            mitglied = new ArrayList<Mitglied>();
-            mitglied.add(new Mitglied("Seb", "Ried", "3d"));
-            mitglied.add(new Mitglied("Jul", "Zwei", "6g"));
+        if (mitgliedList == null) {
+            mitgliedList = new ArrayList<Mitglied>();
+            mitgliedList.add(new Mitglied("Seb", "Ried", "3d"));
+            mitgliedList.add(new Mitglied("Jul", "Zwei", "6g"));
 
         }
-        return mitglied;
+        return mitgliedList;
     }
 
     public void createMitglied(Mitglied mitglied) {
@@ -42,4 +42,5 @@ public enum DataHandler {
         return observableList;
 
     }
+
 }

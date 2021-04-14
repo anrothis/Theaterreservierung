@@ -23,7 +23,7 @@ public class Mitglied implements Serializable {
     private String town;
     private String telephone;
     private String email;
-    @Column(unique = true)
+    // @Column(unique = true)
     private String seat;
 
     public Mitglied() {
@@ -124,5 +124,17 @@ public class Mitglied implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Mitglied(String nName, String vName, String street, String zipCode, String town, String telephone,
+            String email, String seat) {
+        this.nName = nName;
+        this.vName = vName;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.town = town;
+        this.telephone = telephone;
+        this.email = email;
+        this.seat = seat;
     }
 }
