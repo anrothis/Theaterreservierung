@@ -47,6 +47,10 @@ public class DbService {
         return eventRepository.findAll();
     }
 
+    public List<Event> getDate() {
+        return eventRepository.findDate();
+    }
+
     public List<Event> getEventsByName(String name) {
         return eventRepository.findByName(name);
     }
