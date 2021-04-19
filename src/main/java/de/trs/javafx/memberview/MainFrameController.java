@@ -3,10 +3,14 @@ package de.trs.javafx.memberview;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.stereotype.Controller;
 
 import de.trs.javafx.dbcontroller.DbService;
@@ -57,7 +61,9 @@ public class MainFrameController implements Initializable {
 
     public void getDate() throws IOException {
         eventDate = datePicker.getValue();
-        System.out.println(eventDate);
+        String date = eventDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.GERMANY));
+        log.info("UI GET Date: " + date);
+
     }
 
     public void getSearchFields() {

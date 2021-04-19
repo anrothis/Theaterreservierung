@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: #888888;
+}
+.saveButton:hover{
+    -fx-color: #146886;
+    /* -fx-font: 40"serief"; */
+    /* -fx-border-color: WHITE; */
+    /* -fx-border-width: 0px 0px 0 px 0px; */
+}
+
+.titleLable {
+    -fx-text-fill : rgb(136, 14, 91);
+    -fx-font: 40px"serief";
+    
+}
+.titleLable:hover {
+    -fx-color: #146886;
+    -fx-font: 40px"serief";
+    -fx-font-style: italic;
+    -fx-border-color: WHITE;
+    -fx-border-width: 0px 0px 0 px 3px;
+}

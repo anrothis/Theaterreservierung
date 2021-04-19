@@ -3,6 +3,7 @@ package de.trs.javafx.memberview;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -17,7 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class MemberViewPane implements Initializable {
 
@@ -38,7 +41,7 @@ public class MemberViewPane implements Initializable {
 
     public void getDate() throws IOException {
         eventDate = datePicker.getValue();
-        System.out.println(eventDate);
+        log.info("GET DATE -- " + eventDate.format(DateTimeFormatter.ISO_DATE_TIME));
     }
 
     public void getSearchFields() {

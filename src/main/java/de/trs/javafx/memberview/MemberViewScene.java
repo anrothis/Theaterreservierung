@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
 import de.trs.javafx.JavafxApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-// @Component
-public class MemberViewScene extends Scene {
+@Component
+public class MemberViewScene {
 
     /**
      * Autowired test
@@ -22,6 +24,8 @@ public class MemberViewScene extends Scene {
      */
     @Autowired
     private MemberViewPane memberViewPane;
+    @Autowired
+    private ConfigurableApplicationContext context;
 
     /**
      * Initialisiert im Konstruktor die entsprechende FXML Datei
@@ -30,7 +34,6 @@ public class MemberViewScene extends Scene {
      */
     public MemberViewScene() {
 
-        super(loadFXML("/fxml/MainFrame"));
         // this.memberViewPane = (MemberViewPane) loadFXML("MainFrame");
         // this.memberViewPane = (MemberViewPane) getRoot();
 
@@ -43,20 +46,31 @@ public class MemberViewScene extends Scene {
     /*
      * FXML loader Funktion zum laden einer Layout FXML Datei
      */
-    private static Parent loadFXML(String fxml) {
+    private Parent fxmlLoader(String fxml) {
         try {
-
-            log.info("START LOADING FXML: " + fxml);
-            URL fxml_path = JavafxApplication.class.getResource(fxml + ".fxml");
+            Parent root;
+            log.info("START LOADING FXML: ");
+            URL fxml_path = JavafxApplication.class.getResource(fxml);
             log.info("LOADING FXML: " + fxml_path);
             FXMLLoader fxmlLoader = new FXMLLoader(fxml_path);
+            log.info("LOADING ApplicationContext");
+            fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> param) {
+                    return context.getBean(param);
+                }
+            }); // vorzeitiges setzen der Controller
             log.info("LOADING FXML PARENT ROOT");
-            Parent root = fxmlLoader.load();
+            root = fxmlLoader.load();
             log.info("DONE LOADING FXML PARENT ROOT");
             return root;
-        } catch (IOException e) {
-            log.error("ERROR LOADING FXML", e);
+        } catch (Exception e) {
+            log.error("ERROR Loading fxml", e);
+            return null;
         }
-        return null;
+    }
+
+    public Parent getParent() {
+        return fxmlLoader("/fxml/StageScene.fxml");
     }
 }

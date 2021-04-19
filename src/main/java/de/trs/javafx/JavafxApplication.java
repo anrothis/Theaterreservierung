@@ -1,11 +1,16 @@
 package de.trs.javafx;
 
+import java.io.IOException;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import de.trs.javafx.dbcontroller.DbService;
+import de.trs.javafx.memberview.MemberViewScene;
+import de.trs.javafx.memberview.SwitchScene;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +28,22 @@ import lombok.extern.slf4j.Slf4j;
 public class JavafxApplication extends Application {
 
     /**
+     * TODO: Multiview: enum View Enumeration class
+     * 
+     * MAIN("MainFrame.fxml");
+     * 
+     * SECONDVIEW("MainFrame.fxml");
+     * 
+     * TODO: Multiview: Cashing different Views
+     * 
+     * private static Map<View, Parent> cache = new HashMap<>(); if
+     * cach.contains(view) root = cach.get(view) else root = FXMLload...
+     * cach.put(view, root)
+     * 
+     * scene.setRoot(view)
+     */
+
+    /**
      * Window integration
      * 
      * @Autowired erstellt automatisch eine Instanz der Classe und und setellt diese
@@ -31,6 +52,7 @@ public class JavafxApplication extends Application {
     // private MemberViewScene memberViewScene;
     private Parent root;
     private Stage memberViewStage;
+    @Autowired
     private ConfigurableApplicationContext context;
 
     /**
@@ -49,7 +71,6 @@ public class JavafxApplication extends Application {
 
             log.info("START Scene");
             this.memberViewStage.setScene(new Scene(root));
-
             log.info("START .show()");
             this.memberViewStage.show();
 
@@ -58,10 +79,12 @@ public class JavafxApplication extends Application {
             log.error("Could not finisch start()", e);
             log.error(e.getMessage());
         }
+
         /**
          * Beim versuch die Applikation zu schließen wird logout() ausgeführt. Das Event
          * wird bei nicht OK consumiert und der Vorgang somit abgebrochen.
          */
+        // TODO: uncomment
         // this.memberViewStage.setOnCloseRequest(event -> {
         // logout(memberViewStage);
         // event.consume();
@@ -119,27 +142,30 @@ public class JavafxApplication extends Application {
      */
     @Override
     public void init() throws Exception {
-
         this.context = SpringApplication.run(JavafxApplication.class);
-        log.info("START LOADING FXML: ");
-        URL fxml_path = JavafxApplication.class.getResource("/fxml/MainFrame.fxml");
+        this.root = fxmlLoader("/fxml/Scene.fxml");
+        log.info("INITIALIZATION JavaFx got initialized");
+    }
 
+    private Parent fxmlLoader(String fxml) throws IOException {
+        Parent root;
+        log.info("START LOADING FXML: ");
+        URL fxml_path = JavafxApplication.class.getResource(fxml);
         log.info("LOADING FXML: " + fxml_path);
         FXMLLoader fxmlLoader = new FXMLLoader(fxml_path);
-
         log.info("LOADING ApplicationContext");
+
+        /** zuweisen der ControllerFactiory des Spring Boot Frameworks */
         fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
             @Override
             public Object call(Class<?> param) {
                 return context.getBean(param);
             }
-        }); // vorzeitiges setzen der Controller
-
+        });
         log.info("LOADING FXML PARENT ROOT");
         root = fxmlLoader.load();
-
         log.info("DONE LOADING FXML PARENT ROOT");
-        log.info("INITIALIZATION JavaFx got initialized");
+        return root;
     }
 
     @Override
