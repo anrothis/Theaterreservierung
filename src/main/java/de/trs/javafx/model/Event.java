@@ -14,6 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Datenentität zum anlegen der Theateraufführungen
+ * 
+ * @Annotationen sorgen für das automatische generieren der Konstruktoren und
+ *               der Getter/Setter
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Table
 public class Event {
 
+    // TODO: annotieren der Columns
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)

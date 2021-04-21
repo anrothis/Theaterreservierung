@@ -1,0 +1,21 @@
+.label{
+    /* -fx-padding: 10px; */
+    /* -fx-font: 18px; */
+}
+VBox{
+    -fx-padding: 5;
+    -fx-spacing: 10;
+}
+HBox{
+    -fx-padding: 0 5 0 5;
+    -fx-spacing: 10;
+}
+.tab-header-background {
+    -fx-background-color: #888888;
+    -fx-background: linear-gradient(to right bottom, rgba(33, 97, 99, 0.9), rgba(33, 97, 99,0.1));
+    -fx-background-radius: 4;
+    -fx-opacity-inset: 0.3;
+}
+/* Button{
+    -fx-padding: 5;
+} */

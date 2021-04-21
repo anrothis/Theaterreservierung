@@ -1,5 +1,8 @@
-.root {
+.tab-header-background {
     -fx-background-color: #888888;
+    -fx-background: linear-gradient(to right bottom, rgba(33, 97, 99, 0.9), rgba(33, 97, 99,0.1));
+    -fx-background-radius: 4;
+    -fx-opacity-inset: 0.3;
 }
 .saveButton:hover{
     -fx-color: #146886;
@@ -10,13 +13,11 @@
 
 .titleLable {
     -fx-text-fill : rgb(136, 14, 91);
-    -fx-font: 40px"serief";
+    -fx-font: 18"serief";
     
 }
 .titleLable:hover {
     -fx-color: #146886;
-    -fx-font: 40px"serief";
+    -fx-font: 18"serief";
     -fx-font-style: italic;
-    -fx-border-color: WHITE;
-    -fx-border-width: 0px 0px 0 px 3px;
 }

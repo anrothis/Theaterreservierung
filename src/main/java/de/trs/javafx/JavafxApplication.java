@@ -8,9 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import de.trs.javafx.dbcontroller.DbService;
-import de.trs.javafx.memberview.MemberViewScene;
-import de.trs.javafx.memberview.SwitchScene;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

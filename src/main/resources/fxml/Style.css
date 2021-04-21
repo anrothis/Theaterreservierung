@@ -1,7 +1,6 @@
 .root{
-
+    -fx-background-color: #999999;
 }
-
 .menuItem:hover{
     -fx-border-color: #668899;
     -fx-border-width: 0px 0px 3px 0px;
@@ -9,9 +8,8 @@
 
 .sidebarItem:hover{
     -fx-background-color: #146886;
-    -fx-border-color: WHITE;
     -fx-border-width: 0px 0px 0px 3px;
 }
 .topbar{
-    -fx-background-color: BEIGE;
+    -fx-background-color: #999999;
 }

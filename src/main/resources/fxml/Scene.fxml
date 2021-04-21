@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="903.0" prefWidth="1214.0" style="-fx-background-color: #555555;" stylesheets="@./Style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.SliderController">
+<AnchorPane minHeight="0.0" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="950.0" prefWidth="1000.0" stylesheets="@./Style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.SliderController">
     <children>
-        <BorderPane fx:id="borderPane" layoutX="84.0" layoutY="72.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #555555;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane fx:id="borderPane" minHeight="0.0" minWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
-                <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="60.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER_LEFT">
                     <children>
-                        <Pane layoutX="165.0" layoutY="18.0" onMouseDragged="#moveFrame" onMousePressed="#setXY" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #444444;" styleClass="topbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <HBox layoutX="182.0" layoutY="-13.0" prefHeight="35.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="25.0">
+                        <Pane layoutX="165.0" layoutY="18.0" onMouseDragged="#moveFrame" onMousePressed="#setXY" prefHeight="25.0" style="-fx-background-color: #444444;" styleClass="topbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <HBox layoutX="180.0" prefHeight="35.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="25.0">
                             <children>
                                 <JFXButton prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Stage">
                                     <graphic>
@@ -43,7 +43,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton onAction="#openWindow" prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Import">
+                                <JFXButton onAction="#importView" prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Import">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -54,9 +54,9 @@
                                 </JFXButton>
                             </children>
                         </HBox>
-                        <Label fx:id="Menu" layoutX="14.0" layoutY="34.0" prefHeight="22.0" prefWidth="94.0" text="MENU" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="1110.0" AnchorPane.topAnchor="34.0">
+                        <Label fx:id="Menu" layoutX="15.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="100.0" text="MENU" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
                             <graphic>
-                                <ImageView fitHeight="22.0" fitWidth="22.0">
+                                <ImageView fitHeight="22.0" fitWidth="22.0" preserveRatio="true">
                                     <image>
                                         <Image url="@../images/gallery.png" />
                                     </image>
@@ -66,9 +66,9 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
-                        <Label fx:id="MenuBack" layoutX="14.0" layoutY="34.0" prefHeight="22.0" prefWidth="91.0" text="MENU" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="1113.0" AnchorPane.topAnchor="34.0">
+                        <Label fx:id="MenuBack" layoutX="15.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="100.0" text="MENU" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
                             <graphic>
-                                <ImageView fitHeight="22.0" fitWidth="22.0">
+                                <ImageView fitHeight="22.0" fitWidth="22.0" preserveRatio="true">
                                     <image>
                                         <Image url="@../images/gallery.png" />
                                     </image>
@@ -82,18 +82,18 @@
                 </AnchorPane>
             </top>
             <center>
-                <AnchorPane style="-fx-background-color: #555555;" BorderPane.alignment="CENTER">
+                <AnchorPane>
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
                 </AnchorPane>
             </center>
             <left>
-                <AnchorPane fx:id="slider" prefWidth="100.0" style="-fx-background-color: #666666;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="slider" prefWidth="100.0" style="-fx-background-color: #666666;" BorderPane.alignment="TOP_CENTER">
                     <children>
-                        <VBox prefHeight="792.0" prefWidth="142.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                        <VBox spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#gotoStage" prefHeight="35.0" prefWidth="150.0" styleClass="sidebarItem" text="Stage" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#mainView" prefHeight="35.0" prefWidth="100.0" styleClass="sidebarItem" text="Stage" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -105,7 +105,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="150.0" styleClass="sidebarItem" text="Editieren" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#addView" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Editieren" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -117,7 +117,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="150.0" styleClass="sidebarItem" text="Suchen" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Suchen" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -129,7 +129,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#openWindow" prefHeight="40.0" prefWidth="150.0" styleClass="sidebarItem" text="Import" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#importView" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Import" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -142,6 +142,9 @@
                                     </graphic>
                                 </JFXButton>
                             </children>
+                     <padding>
+                        <Insets top="50.0" />
+                     </padding>
                         </VBox>
                     </children>
                 </AnchorPane>

@@ -5,109 +5,106 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="735.0" prefWidth="633.0" stylesheets="@ImportScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.ImportSceneController">
+<AnchorPane prefHeight="900.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.ImportSceneController">
    <children>
-      <TabPane prefHeight="735.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Mitglieder">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+      <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox alignment="CENTER_LEFT" minWidth="500.0" spacing="10.0" stylesheets="@ImportScene.css">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" styleClass="titleLable" text="Listen Import">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="filePathLabel" text="FilePath">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="23.0" prefWidth="499.0" spacing="10.0">
                      <children>
-                        <VBox alignment="CENTER_LEFT" spacing="10.0" stylesheets="@ImportScene.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="585.0" styleClass="titleLable" text="Mitglieder Import">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label styleClass="filePathLabel" text="FilePath">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" prefHeight="34.0" prefWidth="560.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="filePathTextField" prefHeight="23.0" prefWidth="428.0" promptText="./csv/csvLong.csv" />
-                                    <Button fx:id="lookupButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="42.0" text="..." />
-                                    <Button fx:id="loadMemberButton" mnemonicParsing="false" text="Load" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <CheckBox fx:id="hasTitle" mnemonicParsing="false" text="Erste Zeile beinhaltet Zeilenüberschrift" />
-                              <Label text="Datensatz">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="previewMemberListView" prefHeight="200.0" prefWidth="200.0" />
-                              <Label text="Hinzufügen:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="addMemberListView" prefHeight="200.0" prefWidth="200.0" />
-                              <Button fx:id="importMemberButton" mnemonicParsing="false" styleClass="saveButton" text="Save to Datebase" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
+                        <TextField fx:id="filePathTextField" prefHeight="23.0" prefWidth="428.0" promptText="./csv/csvLong.csv" />
+                        <Button fx:id="lookupButton" mnemonicParsing="false" prefWidth="60.0" text="..." />
                      </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Events">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="453.0" prefWidth="589.0">
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="281.0" spacing="10.0">
                      <children>
-                        <VBox alignment="CENTER_LEFT" spacing="10.0" stylesheets="@ImportScene.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="585.0" styleClass="titleLable" text="Event Import">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label styleClass="filePathLabel" text="FilePath">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" prefHeight="34.0" prefWidth="560.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="filePathTextField" prefHeight="23.0" prefWidth="428.0" promptText="./csv/csvLong.csv" />
-                                    <Button fx:id="lookupButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="42.0" text="..." />
-                                    <Button fx:id="loadEventButton" mnemonicParsing="false" text="Load" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <CheckBox fx:id="hasTitle" mnemonicParsing="false" text="Erste Zeile beinhaltet Zeilenüberschrift" />
-                              <Label text="Datensatz">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="previewEventListView" prefHeight="200.0" prefWidth="200.0" />
-                              <Label text="Hinzufügen:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="addEventListView" prefHeight="200.0" prefWidth="200.0" />
-                              <Button fx:id="importEventButton" mnemonicParsing="false" styleClass="saveButton" text="Save to Datebase" />
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
+                        <CheckBox fx:id="hasTitle" mnemonicParsing="false" text="Erste Zeile beinhaltet Zeilenüberschrift" />
+                        <Button fx:id="loadFileButton" mnemonicParsing="false" text="Load" />
                      </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <TabPane rotateGraphic="true" styleClass="tabPanel" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Mitglieder">
+                        <content>
+                          <AnchorPane>
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Label text="Mitglieder Datensatz">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ListView fx:id="previewMemberListView" prefHeight="300.0" />
+                                          <Label text="Hinzufügen:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ListView fx:id="addMemberListView" prefHeight="200.0" />
+                                          <Button fx:id="importMemberButton" mnemonicParsing="false" styleClass="saveButton" text="Save to Datebase" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Events">
+                        <content>
+                          <AnchorPane>
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Label text="Event Datensatz">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ListView fx:id="previewEventListView" prefHeight="300.0" />
+                                          <Label text="Hinzufügen:">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <ListView fx:id="addEventListView" prefHeight="200.0" />
+                                          <Button fx:id="importEventButton" mnemonicParsing="false" styleClass="saveButton" text="Save to Datebase" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TabPane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

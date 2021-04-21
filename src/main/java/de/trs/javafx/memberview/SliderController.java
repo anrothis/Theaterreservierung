@@ -37,8 +37,6 @@ public class SliderController implements Initializable {
     private AnchorPane slider;
 
     @Autowired
-    private TextViewController textViewController;
-    @Autowired
     private ApplicationContext context;
     private double x, y;
 
@@ -58,7 +56,7 @@ public class SliderController implements Initializable {
     }
 
     @FXML
-    void gotoStage(ActionEvent event) {
+    void mainView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.TABLEVIEW.getFxml());
             borderPane.setCenter(root);
@@ -68,9 +66,19 @@ public class SliderController implements Initializable {
     }
 
     @FXML
-    void openWindow(ActionEvent event) {
+    void importView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.IMPORTVIEW.getFxml());
+            borderPane.setCenter(root);
+        } catch (Exception e) {
+            log.error("ERROR Loading FXML TableView", e);
+        }
+    }
+
+    @FXML
+    void addView(ActionEvent event) {
+        try {
+            Parent root = reloadFxml(SwitchScene.ADDVIEW.getFxml());
             borderPane.setCenter(root);
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
@@ -98,35 +106,24 @@ public class SliderController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        AnchorPane center = (AnchorPane) borderPane.getCenter();
-
-        slider.setTranslateX(0);
-        center.setTranslateX(0);
+        // center = (AnchorPane) borderPane.getCenter();
+        // slider.setTranslateX(0);
+        // center.setTranslateX(0);
+        Menu.setVisible(false);
         Menu.setOnMouseClicked(event -> {
+            borderPane.setLeft(slider);
             TranslateTransition sliderTranslation = new TranslateTransition();
             sliderTranslation.setDuration(Duration.millis(400));
             sliderTranslation.setNode(slider);
             sliderTranslation.setToX(0);
             sliderTranslation.play();
 
-            slider.setTranslateX(-100);
-
-            TranslateTransition tablePaneTranslation = new TranslateTransition();
-            tablePaneTranslation.setDuration(Duration.millis(400));
-            tablePaneTranslation.setNode(borderPane.getCenter());
-            tablePaneTranslation.setToX(0);
-            tablePaneTranslation.play();
-
-            borderPane.getCenter().setTranslateX(100);
-
-            center.setMinWidth(center.getWidth() - 100);
-
             sliderTranslation.setOnFinished(e -> {
                 MenuBack.setVisible(true);
                 Menu.setVisible(false);
             });
-
         });
+
         MenuBack.setOnMouseClicked(event -> {
             TranslateTransition sliderTranslation = new TranslateTransition();
             sliderTranslation.setDuration(Duration.millis(400));
@@ -134,26 +131,14 @@ public class SliderController implements Initializable {
             sliderTranslation.setToX(-100);
             sliderTranslation.play();
 
-            slider.setTranslateX(0);
-
-            TranslateTransition tablePaneTranslation = new TranslateTransition();
-            tablePaneTranslation.setDuration(Duration.millis(400));
-            tablePaneTranslation.setNode(borderPane.getCenter());
-            tablePaneTranslation.setToX(-100);
-            tablePaneTranslation.play();
-
-            borderPane.getCenter().setTranslateX(-200);
-            center.setMinWidth(center.getWidth() + 100);
-
             sliderTranslation.setOnFinished(e -> {
+                borderPane.setLeft(null);
                 Menu.setVisible(true);
                 MenuBack.setVisible(false);
             });
-
         });
-
         // TODO: Column initialisation
-        this.gotoStage(null);
+        this.mainView(null);
 
     }
 

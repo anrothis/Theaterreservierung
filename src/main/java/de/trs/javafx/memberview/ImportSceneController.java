@@ -23,10 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ImportSceneController {
 
     @FXML
+    private TextField filePathTextField;
+
+    @FXML
     private Button lookupButton;
 
     @FXML
-    private Button loadMemberButton;
+    private Button loadFileButton;
+
+    @FXML
+    private CheckBox hasTitle;
 
     @FXML
     private ListView<String> previewMemberListView;
@@ -36,15 +42,6 @@ public class ImportSceneController {
 
     @FXML
     private Button importMemberButton;
-
-    @FXML
-    private TextField filePathTextField;
-
-    @FXML
-    private Button loadEventButton;
-
-    @FXML
-    private CheckBox hasTitle;
 
     @FXML
     private ListView<String> previewEventListView;
@@ -78,16 +75,17 @@ public class ImportSceneController {
 
         });
 
-        loadMemberButton.setOnAction(evet -> {
+        loadFileButton.setOnAction(evet -> {
             if (!filePathTextField.getText().equals("")) {
                 try {
                     log.info("LOADING FILE");
                     ArrayList<Mitglied> tempList = CsvHandler.PareseMemberList
                             .getMemberfromCSV(filePathTextField.getText(), hasTitle.isArmed());
+                    // TODO: load list to ListView
+
                 } catch (Exception e) {
                     // TODO: handle exception
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Fehler beim laden der ausgewählten Datei.");
-                    // alert.set
                     alert.showAndWait();
                 }
             }
