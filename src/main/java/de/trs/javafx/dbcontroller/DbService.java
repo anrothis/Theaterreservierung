@@ -2,6 +2,7 @@ package de.trs.javafx.dbcontroller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,48 @@ public class DbService {
     }
 
     /**
-     * used requests
+     * Member Database requests
      */
+
     public List<Mitglied> getMembers() {
         return memberRepository.findAll();
     }
 
+    public void addMember(Mitglied mitglied) {
+        memberRepository.save(mitglied);
+    }
+
+    public void deleteMember(Mitglied selectedItems) {
+        memberRepository.delete(selectedItems);
+    }
+
+    public Optional<Mitglied> getReservationList(Event event) {
+        Optional<Mitglied> reservationList = memberRepository.findById(event.getReservationsList().getId());
+        if (!reservationList.isPresent()) {
+            // TODO: Prüfen
+        }
+        return reservationList;
+    }
+
+    /**
+     * Event Database requests
+     */
+
     public List<Event> getEventsByDate(Date date) {
         return eventRepository.findByPerformanceDate(date);
+    }
+
+    public void addEvent(Event event) {
+        eventRepository.save(event);
+    }
+
+    public void updateReservationList(Event event, Mitglied[] mitglied) {
+
+        for (Mitglied mitglied2 : mitglied) {
+            event.setReservationsList(mitglied2);
+        }
+        eventRepository.save(event);
+
     }
 
     /**
@@ -58,5 +93,4 @@ public class DbService {
     public List<Event> getEventsByLocation(String location) {
         return eventRepository.findByLocation(location);
     }
-
 }

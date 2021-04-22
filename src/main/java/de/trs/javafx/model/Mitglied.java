@@ -11,7 +11,7 @@ public class Mitglied {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true, nullable = false)
+    @Column(name = "MEMBER_ID", unique = true, nullable = false)
     private long id;
 
     private String nName;

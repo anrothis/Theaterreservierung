@@ -106,9 +106,6 @@ public class SliderController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // center = (AnchorPane) borderPane.getCenter();
-        // slider.setTranslateX(0);
-        // center.setTranslateX(0);
         Menu.setVisible(false);
         Menu.setOnMouseClicked(event -> {
             borderPane.setLeft(slider);

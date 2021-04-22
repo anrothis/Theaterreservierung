@@ -1,21 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="textViewPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.TextViewController">
+<AnchorPane fx:id="textViewPane" prefHeight="500.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.TextViewController">
    <children>
-      <SplitPane fx:id="splitPane" dividerPositions="0.5" orientation="VERTICAL" prefWidth="900.0" style="-fx-background-color: #555555;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane fx:id="splitPane" dividerPositions="0.498989898989899" orientation="VERTICAL" prefWidth="900.0" style="-fx-background-color: #555555;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <TableView fx:id="memberTableView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <TableView fx:id="memberTableView" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <JFXButton onAction="#reloadMemberView" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Liste aktuallisieren" />
+                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied hinzufügen" />
+                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied zu Event hinzufügen" />
+                                    <JFXButton onAction="#deleteMember" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitgliled löschen" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </top>
+                  </BorderPane>
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <TableView fx:id="eventTableView" prefHeight="339.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <TableView fx:id="eventTableView" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <AnchorPane prefHeight="36.0" prefWidth="829.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <DatePicker fx:id="eventDatePicker" editable="false" onAction="#reloadEventView" showWeekNumbers="true" />
+                                    <ChoiceBox fx:id="eventChoiceBox" prefWidth="150.0" />
+                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied entfernen" />
+                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Speichern" />
+                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Delete" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </top>
+                  </BorderPane>
                </children>
             </AnchorPane>
          </items>

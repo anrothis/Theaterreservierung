@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,18 +37,27 @@ public class Event {
     // @Column(nullable = false)
     private Date performanceDate;
     private String location;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    // @JsonProperty(access = JsonProperty.Access.AUTO)
+    @JoinColumn(name = "MEMBER_ID")
     private Mitglied reservationsList;
-
-    /** reduzierter Konstruktor zu Testzwecken */
-    public Event(String name, String location) {
-        this.name = name;
-        this.location = location;
-    }
 
     public Event(String name, Date performanceDate, String location) {
         this.name = name;
         this.performanceDate = performanceDate;
+        this.location = location;
+    }
+
+    public Event(String name, Date performanceDate, String location, Mitglied reservationsList) {
+        this.name = name;
+        this.performanceDate = performanceDate;
+        this.location = location;
+        this.reservationsList = reservationsList;
+    }
+
+    /** reduzierter Konstruktor zu Testzwecken */
+    public Event(String name, String location) {
+        this.name = name;
         this.location = location;
     }
 

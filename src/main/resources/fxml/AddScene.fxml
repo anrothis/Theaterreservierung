@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="430.0" prefWidth="700.0" stylesheets="@AddScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="430.0" prefWidth="700.0" stylesheets="@AddScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.AddSceneController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -78,8 +78,8 @@
                                     </VBox>
                                     <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
-                                          <Button fx:id="resetMemberButton" mnemonicParsing="false" text="Zurücksetzen" />
-                                          <Button fx:id="addMemberButton" mnemonicParsing="false" text="Anlegen" />
+                                          <Button fx:id="resetMemberButton" mnemonicParsing="false" onAction="#clearMemberTextFields" text="Zurücksetzen" />
+                                          <Button fx:id="addMemberButton" mnemonicParsing="false" onAction="#addMember" text="Anlegen" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -113,7 +113,7 @@
                                     <VBox GridPane.columnIndex="1">
                                        <children>
                                           <TextField fx:id="eventnameTextField" />
-                                          <DatePicker fx:id="eventDatePicker" />
+                                          <DatePicker fx:id="eventDatePicker" editable="false" showWeekNumbers="true" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -152,8 +152,8 @@
                                     <CheckBox fx:id="copyMembersCheckBox" mnemonicParsing="false" text="Mitglieder aus früherer Vorführung kopieren" GridPane.rowIndex="2" />
                                     <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
-                                          <Button fx:id="resetEventButton" mnemonicParsing="false" text="Zurücksetzen" />
-                                          <Button fx:id="addEventButton" mnemonicParsing="false" text="Anlegen" />
+                                          <Button fx:id="resetEventButton" mnemonicParsing="false" onAction="#clearEventTextFields" text="Zurücksetzen" />
+                                          <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEvent" text="Anlegen" />
                                        </children>
                                     </HBox>
                                  </children>
