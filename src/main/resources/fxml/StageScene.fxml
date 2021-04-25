@@ -21,7 +21,7 @@
                               <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <JFXButton onAction="#reloadMemberView" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Liste aktuallisieren" />
-                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied hinzufügen" />
+                                    <JFXButton onAction="#addMemberToResrevationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied hinzufügen" />
                                     <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied zu Event hinzufügen" />
                                     <JFXButton onAction="#deleteMember" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitgliled löschen" />
                                  </children>
@@ -45,8 +45,8 @@
                                  <children>
                                     <DatePicker fx:id="eventDatePicker" editable="false" onAction="#reloadEventView" showWeekNumbers="true" />
                                     <ChoiceBox fx:id="eventChoiceBox" prefWidth="150.0" />
-                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied entfernen" />
-                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Speichern" />
+                                    <JFXButton onAction="#removeMemberFromReservation" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied entfernen" />
+                                    <JFXButton onAction="#updateReservationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Speichern" />
                                     <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Delete" />
                                  </children>
                                  <opaqueInsets>

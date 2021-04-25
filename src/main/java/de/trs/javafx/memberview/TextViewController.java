@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class TextViewController extends AnchorPane implements Initializable {
 
+    //TODO: Suchfunktion, Bild Sitzplätze
     @FXML
     private AnchorPane textViewPane;
 
@@ -54,6 +55,66 @@ public class TextViewController extends AnchorPane implements Initializable {
     @Autowired
     private DbService dbService;
 
+    private ObservableList<Event> currentEvents;
+
+    @FXML
+    private void updateReservationList() {
+        ObservableList<Mitglied> mitglieder = eventTableView.getItems();
+        log.info("SELECTED INDEX " + eventChoiceBox.getSelectionModel().getSelectedIndex());
+        log.info("SELECTED Memberlist " + mitglieder.size());
+        int index = eventChoiceBox.getSelectionModel().getSelectedIndex();
+        if (index == -1) {
+            log.info("SELECTION no event selected");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Keine Veranstaltung ausgewählt!");
+            alert.showAndWait();
+            return;
+        }
+        Event currentEvent = currentEvents.get(index);
+        dbService.updateReservationList(currentEvent, mitglieder);
+    }
+
+    @FXML
+    private void addMemberToResrevationList() {
+
+        Mitglied selctedMitglied = (Mitglied) memberTableView.getSelectionModel().getSelectedItem();
+        log.info("ADDING " + selctedMitglied);
+
+        if (selctedMitglied == null) {
+            log.info("Kein Mitglied ausgewaehlt");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Kein Mitglied ausgewählt!");
+            alert.showAndWait();
+            return;
+        }
+
+        if (eventTableView.getItems().contains(selctedMitglied)) {
+            log.info("COLLISION Member already in Reservation List");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Mitglied wurde bereits hinzugefügt!");
+            alert.showAndWait();
+            return;
+        }
+
+        log.info("ADDED Member to Reservation List");
+        eventTableView.getItems().add(selctedMitglied);
+    }
+
+    @FXML
+    private void removeMemberFromReservation() {
+        Mitglied selctedMitglied = (Mitglied) eventTableView.getSelectionModel().getSelectedItem();
+        log.info("REMOVING " + selctedMitglied);
+
+        if (selctedMitglied == null) {
+            log.info("Kein Mitglied ausgewaehlt");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Kein Mitglied ausgewählt!");
+            alert.showAndWait();
+            return;
+        }
+        eventTableView.getItems().remove(selctedMitglied);
+    }
+
     @FXML
     private void deleteMember() {
         Mitglied selctedMitglied = (Mitglied) memberTableView.getSelectionModel().getSelectedItem();
@@ -61,14 +122,14 @@ public class TextViewController extends AnchorPane implements Initializable {
 
         if (selctedMitglied == null) {
             log.info("Kein Mitglied ausgewaehlt");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Kein Mitglied ausgewählt!");
             alert.showAndWait();
             return;
         }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText("Soll Mitglied wiklich gelöscht werden?");
+        // TODO: Mitglieder Daten schön darstellen
         alert.setHeaderText(selctedMitglied.toString());
         alert.setTitle("Mitglied löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
@@ -77,13 +138,11 @@ public class TextViewController extends AnchorPane implements Initializable {
 
         if (buttonType.get() == ButtonType.OK) {
             dbService.deleteMember(selctedMitglied);
-            memberTableView.setItems(mitgliedAsObservableList());
+            reloadMemberView();
         } else {
             log.info("Loeschvorgang abgebrochen");
         }
-
         log.info("END Mitglied loeschen");
-
     }
 
     private ObservableList<Mitglied> mitgliedAsObservableList() {
@@ -98,6 +157,27 @@ public class TextViewController extends AnchorPane implements Initializable {
         return observableEventList;
     }
 
+    private ObservableList<Mitglied> reservationAsObservableList(int index) {
+        Optional<Mitglied> optionalReservationList = dbService.getReservationList(currentEvents.get(index));
+        ObservableList<Mitglied> reservationList = FXCollections.observableArrayList();
+
+        if (optionalReservationList.isPresent()) {
+            try {
+
+                Mitglied[] l = optionalReservationList.stream().toArray(Mitglied[]::new);
+                log.info("RESERVATIONLIST " + l);
+                reservationList.addAll(FXCollections.observableArrayList(l));
+            } catch (Exception e) {
+                log.error("ERROR loading reservationList", e);
+            }
+            return reservationList;
+        }
+        return null;
+    }
+
+    /**
+     * Mitglieder Tabelle TODO: bereits hinzugefügte Mitglieder grün hinterlegen
+     */
     @FXML
     private void reloadMemberView() {
         memberTableView.setItems(mitgliedAsObservableList());
@@ -105,23 +185,18 @@ public class TextViewController extends AnchorPane implements Initializable {
 
     @FXML
     private void reloadEventView() {
-        ObservableList<Event> events = eventAsObservableList();
+        currentEvents = eventAsObservableList();
         ObservableList<String> eventNameObservableList = FXCollections.observableArrayList();
-        ObservableList<Mitglied> mitglieder = FXCollections.observableArrayList();
-
+        eventTableView.getItems().clear();
         eventChoiceBox.getItems().clear();
 
-        if (events.size() != 0) {
-            for (int i = 0; i < events.size(); i++) {
-                eventNameObservableList.add(events.get(i).getName());
+        if (currentEvents.size() != 0) {
+            for (int i = 0; i < currentEvents.size(); i++) {
+                eventNameObservableList.add(currentEvents.get(i).getName());
             }
             eventChoiceBox.setItems(eventNameObservableList);
             eventChoiceBox.getSelectionModel().clearAndSelect(0);
-
-            mitglieder.add(events.get(0).getReservationsList());
-
-            // eventTableView.setItems();
-
+            // eventTableView.getItems().addAll(reservationAsObservableList(0));
         } else {
             eventChoiceBox.setValue("-- Keine Events --");
         }
@@ -158,9 +233,11 @@ public class TextViewController extends AnchorPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         eventDatePicker.setValue(LocalDate.now());
 
-        eventChoiceBox.setOnAction(e -> {
-            log.info(String.valueOf(eventChoiceBox.getSelectionModel().getSelectedIndex()));
-        });
+        // tChoiceBox.setOnAction(e -> {
+        // int selectedIndex = eventChoiceBox.getSelectionModel().getSelectedIndex();
+        // log.info("SELECTION " + String.valueOf(selectedIndex));
+        //     eventTableView.getItems().addAll(reservationAsObservableList(selectedIndex));
+        // });
         /** propreäter */
         // eventChoiceBox.getSelectionModel().selectedIndexProperty().addListener((e, a,
         // b) -> {

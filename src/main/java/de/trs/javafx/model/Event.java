@@ -37,7 +37,7 @@ public class Event {
     // @Column(nullable = false)
     private Date performanceDate;
     private String location;
-    @ManyToOne(optional = false)
+    @ManyToOne()
     // @JsonProperty(access = JsonProperty.Access.AUTO)
     @JoinColumn(name = "MEMBER_ID")
     private Mitglied reservationsList;

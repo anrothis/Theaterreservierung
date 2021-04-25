@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import de.trs.javafx.model.Event;
 import de.trs.javafx.model.Mitglied;
+import javafx.collections.ObservableList;
 
 @Service
 public class DbService {
@@ -58,13 +59,12 @@ public class DbService {
         eventRepository.save(event);
     }
 
-    public void updateReservationList(Event event, Mitglied[] mitglied) {
+    public void updateReservationList(Event event, ObservableList<Mitglied> mitglied) {
 
         for (Mitglied mitglied2 : mitglied) {
             event.setReservationsList(mitglied2);
         }
         eventRepository.save(event);
-
     }
 
     /**
@@ -93,4 +93,5 @@ public class DbService {
     public List<Event> getEventsByLocation(String location) {
         return eventRepository.findByLocation(location);
     }
+
 }
