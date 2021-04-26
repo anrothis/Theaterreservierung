@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class TextViewController extends AnchorPane implements Initializable {
 
-    //TODO: Suchfunktion, Bild Sitzplätze
+    // TODO: Suchfunktion, Bild Sitzplätze
     @FXML
     private AnchorPane textViewPane;
 
@@ -80,6 +80,14 @@ public class TextViewController extends AnchorPane implements Initializable {
         Mitglied selctedMitglied = (Mitglied) memberTableView.getSelectionModel().getSelectedItem();
         log.info("ADDING " + selctedMitglied);
 
+        if (eventChoiceBox.getSelectionModel().getSelectedIndex() == -1) {
+            log.info("EMPTY Keine Veranstalung ausgewaehlt");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Keine Veranstalung ausgewaehlt!");
+            alert.showAndWait();
+            return;
+        }
+
         if (selctedMitglied == null) {
             log.info("Kein Mitglied ausgewaehlt");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -113,6 +121,7 @@ public class TextViewController extends AnchorPane implements Initializable {
             return;
         }
         eventTableView.getItems().remove(selctedMitglied);
+        updateReservationList();
     }
 
     @FXML
@@ -158,21 +167,25 @@ public class TextViewController extends AnchorPane implements Initializable {
     }
 
     private ObservableList<Mitglied> reservationAsObservableList(int index) {
-        Optional<Mitglied> optionalReservationList = dbService.getReservationList(currentEvents.get(index));
-        ObservableList<Mitglied> reservationList = FXCollections.observableArrayList();
+        log.info("LOADING reservationlist from index " + index);
+        List<Mitglied> reservationList;
+        if (index != -1) {
+            reservationList = dbService.getReservationList(currentEvents.get(index));
 
-        if (optionalReservationList.isPresent()) {
+        } else {
+            reservationList = FXCollections.observableArrayList();
+        }
+        ObservableList<Mitglied> reservationObservableList = FXCollections.observableArrayList();
+
+        if (reservationList.size() != 0) {
             try {
-
-                Mitglied[] l = optionalReservationList.stream().toArray(Mitglied[]::new);
-                log.info("RESERVATIONLIST " + l);
-                reservationList.addAll(FXCollections.observableArrayList(l));
+                log.info("LOADING reservationlist");
+                reservationObservableList = FXCollections.observableArrayList(reservationList);
             } catch (Exception e) {
                 log.error("ERROR loading reservationList", e);
             }
-            return reservationList;
         }
-        return null;
+        return reservationObservableList;
     }
 
     /**
@@ -233,11 +246,12 @@ public class TextViewController extends AnchorPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         eventDatePicker.setValue(LocalDate.now());
 
-        // tChoiceBox.setOnAction(e -> {
-        // int selectedIndex = eventChoiceBox.getSelectionModel().getSelectedIndex();
-        // log.info("SELECTION " + String.valueOf(selectedIndex));
-        //     eventTableView.getItems().addAll(reservationAsObservableList(selectedIndex));
-        // });
+        eventChoiceBox.setOnAction(e -> {
+            int selectedIndex = eventChoiceBox.getSelectionModel().getSelectedIndex();
+            log.info("SELECTION " + String.valueOf(selectedIndex));
+            eventTableView.getItems().clear();
+            eventTableView.getItems().addAll(reservationAsObservableList(selectedIndex));
+        });
         /** propreäter */
         // eventChoiceBox.getSelectionModel().selectedIndexProperty().addListener((e, a,
         // b) -> {

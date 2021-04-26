@@ -1,14 +1,18 @@
 package de.trs.javafx.model;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -31,16 +35,15 @@ public class Event {
     // TODO: annotieren der Columns
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true, nullable = false)
+    @Column(name = "EVENT_ID", unique = true, nullable = false)
     private Long id;
     private String name;
     // @Column(nullable = false)
     private Date performanceDate;
     private String location;
-    @ManyToOne()
-    // @JsonProperty(access = JsonProperty.Access.AUTO)
-    @JoinColumn(name = "MEMBER_ID")
-    private Mitglied reservationsList;
+    @ManyToMany(targetEntity = Mitglied.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "RESERVATION", joinColumns = @JoinColumn(name = "EVENT_ID"), inverseJoinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private List<Mitglied> reservationsList;
 
     public Event(String name, Date performanceDate, String location) {
         this.name = name;
@@ -48,7 +51,7 @@ public class Event {
         this.location = location;
     }
 
-    public Event(String name, Date performanceDate, String location, Mitglied reservationsList) {
+    public Event(String name, Date performanceDate, String location, List<Mitglied> reservationsList) {
         this.name = name;
         this.performanceDate = performanceDate;
         this.location = location;

@@ -21,6 +21,7 @@ public class DbConfig {
 
             memberRepository.saveAll(CsvHandler.PareseMemberList.getMemberfromCSV("members.csv", true));
             eventRepository.saveAll(CsvHandler.ParseEventList.getEventfromCSV("eventsLong.csv", true));
+
             // log.info("DB READ getMembers() --- " + dbService.getMembers().toString());
             // log.info("DB READ getMemberName() --- " + dbService.getMemberName());
             // log.info("DB READ getEventsByName() --- " + dbService.getEvents());
