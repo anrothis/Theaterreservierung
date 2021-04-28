@@ -24,9 +24,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -57,6 +59,11 @@ public class TextViewController extends AnchorPane implements Initializable {
 
     private ObservableList<Event> currentEvents;
 
+    /**
+     * Die Reservierugsliste eines Events wird auf den aktuellen Stand überschrieben
+     * Sollte kein Event in der EventChoiceBox ausgewählt worden sein, wird eine
+     * Meldung ausgegeben.
+     */
     @FXML
     private void updateReservationList() {
         ObservableList<Mitglied> mitglieder = eventTableView.getItems();
@@ -74,6 +81,13 @@ public class TextViewController extends AnchorPane implements Initializable {
         dbService.updateReservationList(currentEvent, mitglieder);
     }
 
+    /**
+     * Fügt ein selektiertes Mitglied aus der Mitglieder TableView der Event
+     * TableView hinzu. Es wird eine Meldung ausgegeben, wenn:
+     * 
+     * - Kein Event ausgewählt wurde - Kein Mitglied ausgewählt wurde - Das gewählte
+     * Mitglied bereits hinzugefügt wurde
+     */
     @FXML
     private void addMemberToResrevationList() {
 
@@ -96,7 +110,7 @@ public class TextViewController extends AnchorPane implements Initializable {
             return;
         }
 
-        if (eventTableView.getItems().contains(selctedMitglied)) {
+        if (isMemberOnReservationlist(selctedMitglied)) {
             log.info("COLLISION Member already in Reservation List");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Mitglied wurde bereits hinzugefügt!");
@@ -108,9 +122,14 @@ public class TextViewController extends AnchorPane implements Initializable {
         eventTableView.getItems().add(selctedMitglied);
     }
 
+    /**
+     * Entfernt das ausgewählte Mitglied von der Event TableView Gibt eine Meldung
+     * aus, sollte kein Mitglied ausgewählt worden sein. Anschließend wird die
+     * reservationLise aktuallisiert.
+     */
     @FXML
     private void removeMemberFromReservation() {
-        Mitglied selctedMitglied = (Mitglied) eventTableView.getSelectionModel().getSelectedItem();
+        Mitglied selctedMitglied = eventTableView.getSelectionModel().getSelectedItem();
         log.info("REMOVING " + selctedMitglied);
 
         if (selctedMitglied == null) {
@@ -124,6 +143,11 @@ public class TextViewController extends AnchorPane implements Initializable {
         updateReservationList();
     }
 
+    /**
+     * Endgültiges Löschen eines Mitgliedes von der List und aus Datenbank Gibt eine
+     * Meldung aus wenn kein Mitglied ausgewählt wurde. Gibt eine Warnmeldung aus
+     * und bittet um Bestätigung.
+     */
     @FXML
     private void deleteMember() {
         Mitglied selctedMitglied = (Mitglied) memberTableView.getSelectionModel().getSelectedItem();
@@ -148,24 +172,45 @@ public class TextViewController extends AnchorPane implements Initializable {
         if (buttonType.get() == ButtonType.OK) {
             dbService.deleteMember(selctedMitglied);
             reloadMemberView();
+            reloadEventView();
         } else {
             log.info("Loeschvorgang abgebrochen");
         }
         log.info("END Mitglied loeschen");
     }
 
+    /**
+     * Ruft die Mitgliederliste von der Datenbank ab und konvertiert diese in eine
+     * ObservableList.
+     * 
+     * @return ObservableList vom Typ Mitglied
+     */
     private ObservableList<Mitglied> mitgliedAsObservableList() {
         ObservableList<Mitglied> observableList = FXCollections.observableList(dbService.getMembers());
         return observableList;
 
     }
 
+    /**
+     * Ruft die Events für ein bestimmtes Datum von der Datenbank ab und konvertiert
+     * diese in eine ObservableList.
+     * 
+     * @return ObservableList vom Typ Event
+     */
     private ObservableList<Event> eventAsObservableList() {
         Date eventDate = Date.valueOf(eventDatePicker.getValue());
         ObservableList<Event> observableEventList = FXCollections.observableList(dbService.getEventsByDate(eventDate));
         return observableEventList;
     }
 
+    /**
+     * Ruft die Mitgliederliste zu einem bestimmten Event von der Datenbank ab und
+     * konvertiert diese in eine ObservableList.
+     * 
+     * @param index benötigt den Index des Events in der EventChoiceBox um das
+     *              entsprechende Element aus der currentEvents Liste zu laden.
+     * @return ObservableList vom Typ Mitglied
+     */
     private ObservableList<Mitglied> reservationAsObservableList(int index) {
         log.info("LOADING reservationlist from index " + index);
         List<Mitglied> reservationList;
@@ -189,13 +234,61 @@ public class TextViewController extends AnchorPane implements Initializable {
     }
 
     /**
-     * Mitglieder Tabelle TODO: bereits hinzugefügte Mitglieder grün hinterlegen
+     * Erneutes Laden der Mitglieder TextView.
+     * 
+     * Modifizieren der RowFacktory, damit Mitglieder, welche bereits auf der Event
+     * TableView stehen, grün hinterlegt werden.
      */
     @FXML
     private void reloadMemberView() {
-        memberTableView.setItems(mitgliedAsObservableList());
+        ObservableList<Mitglied> mitgliedAsObservableList = mitgliedAsObservableList();
+        memberTableView.setItems(mitgliedAsObservableList);
+
+        memberTableView.setRowFactory(new Callback<TableView<Mitglied>, TableRow<Mitglied>>() {
+
+            @Override
+            public TableRow<Mitglied> call(TableView<Mitglied> tableView) {
+                return new TableRow<Mitglied>() {
+                    @Override
+                    protected void updateItem(Mitglied mitglied, boolean empty) {
+                        super.updateItem(mitglied, empty);
+
+                        if (empty || mitglied == null) {
+                            this.setText(null);
+                            this.setGraphic(null);
+                            this.setStyle(null);
+                        } else if (isMemberOnReservationlist(mitglied)) {
+                            this.setStyle("-fx-background-color:lightgreen");
+
+                        }
+                    }
+                };
+            }
+        });
     }
 
+    /**
+     * Hilfsfunktion zur Kontrolle anhand der ID, ob sich ein Mitglied bereits auf
+     * der Event TextView befindet.
+     * 
+     * @param mitglied das zu überprüfende Mitglied
+     * @return gibt true oder false zurück
+     */
+    private boolean isMemberOnReservationlist(Mitglied mitglied) {
+        for (Mitglied mitglied2 : eventTableView.getItems()) {
+            if (mitglied.getId() == mitglied2.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Erneutes Laden der Event TableView und der Event ChoiceBox.
+     * 
+     * Sollte am gewählten Tag keine Veranstaltung stattfinden wird die ChoiceBox
+     * auf -- Keine Events -- gesetzt.
+     */
     @FXML
     private void reloadEventView() {
         currentEvents = eventAsObservableList();
@@ -209,12 +302,14 @@ public class TextViewController extends AnchorPane implements Initializable {
             }
             eventChoiceBox.setItems(eventNameObservableList);
             eventChoiceBox.getSelectionModel().clearAndSelect(0);
-            // eventTableView.getItems().addAll(reservationAsObservableList(0));
         } else {
             eventChoiceBox.setValue("-- Keine Events --");
         }
     }
 
+    /**
+     * Initiales erzeugen der TableView Elemente
+     */
     private void generateTableView() {
         /**
          * initialisieren der Mitglieder TabelView
@@ -251,7 +346,9 @@ public class TextViewController extends AnchorPane implements Initializable {
             log.info("SELECTION " + String.valueOf(selectedIndex));
             eventTableView.getItems().clear();
             eventTableView.getItems().addAll(reservationAsObservableList(selectedIndex));
+            reloadMemberView();
         });
+
         /** propreäter */
         // eventChoiceBox.getSelectionModel().selectedIndexProperty().addListener((e, a,
         // b) -> {

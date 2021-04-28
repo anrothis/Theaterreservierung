@@ -19,7 +19,7 @@ public class DbConfig {
     CommandLineRunner commandLineRunner(MemberRepository memberRepository, EventRepository eventRepository) {
         return args -> {
 
-            memberRepository.saveAll(CsvHandler.PareseMemberList.getMemberfromCSV("members.csv", true));
+            memberRepository.saveAll(CsvHandler.ParseMemberList.getMemberfromCSV("members.csv", true));
             eventRepository.saveAll(CsvHandler.ParseEventList.getEventfromCSV("eventsLong.csv", true));
 
             // log.info("DB READ getMembers() --- " + dbService.getMembers().toString());

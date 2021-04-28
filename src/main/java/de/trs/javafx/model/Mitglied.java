@@ -23,6 +23,8 @@ public class Mitglied {
     private String email;
     // @Column(unique = true)
     private String seat;
+    // @OneToOne
+    private String uniqueSeat;
 
     public Mitglied() {
     }

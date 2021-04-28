@@ -3,8 +3,11 @@ package de.trs.javafx.dbcontroller;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.trs.javafx.model.Mitglied;
 
@@ -40,4 +43,14 @@ public interface MemberRepository extends JpaRepository<Mitglied, Long> {
      * @return
      */
     Mitglied findBySeatOrderBySeatAsc(String seat);
+
+    /** not working jet */
+    @Query(value = "select * from mitglied m inner join reservation r on m.member_id = r.member_id  where r.Event_id = ?1)", nativeQuery = true)
+    List<Mitglied> getReservationList(Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM RESERVATION WHERE MEMBER_ID = :ID", nativeQuery = true)
+    void deleteMemberformReservations(@Param("ID") Long id);
+
 }

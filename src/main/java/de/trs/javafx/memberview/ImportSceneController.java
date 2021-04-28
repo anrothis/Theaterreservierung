@@ -79,12 +79,11 @@ public class ImportSceneController {
             if (!filePathTextField.getText().equals("")) {
                 try {
                     log.info("LOADING FILE");
-                    ArrayList<Mitglied> tempList = CsvHandler.PareseMemberList
+                    ArrayList<Mitglied> tempList = CsvHandler.ParseMemberList
                             .getMemberfromCSV(filePathTextField.getText(), hasTitle.isArmed());
                     // TODO: load list to ListView
 
                 } catch (Exception e) {
-                    // TODO: handle exception
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Fehler beim laden der ausgewählten Datei.");
                     alert.showAndWait();
                 }

@@ -59,7 +59,7 @@ public class CsvHandler {
         }
     }
 
-    public static class PareseMemberList {
+    public static class ParseMemberList {
 
         public static ArrayList<Mitglied> getMemberfromCSV(String csvName, boolean hasTitel) {
             List<List<String>> memberListCSV;
@@ -99,6 +99,27 @@ public class CsvHandler {
                 eventList.add(new Event(list.get(0), new Date(Long.parseLong(list.get(1))), list.get(2)));
             }
             return eventList;
+        }
+    }
+
+    public static class ParseSeating {
+
+        public static ArrayList<Seating> getSeatingfromCSV(String csvName, boolean hasTitel) {
+            List<List<String>> seatingListCSV;
+            seatingListCSV = CsvHandler.readCSV(csvName, hasTitel);
+            if (seatingListCSV == null) {
+                seatingListCSV = new ArrayList<List<String>>();
+                List<String> seatingCSV = new ArrayList<String>();
+                seatingCSV.add("01-001(Placeholder)");
+                seatingCSV.add("01-002");
+                seatingCSV.add("02-001");
+                seatingListCSV.add(seatingCSV);
+            }
+            ArrayList<Seating> seatingList = new ArrayList<Seating>();
+            for (List<String> list : seatingListCSV) {
+                seatingList.add(new Seating(list.get(0)));
+            }
+            return seatingList;
         }
     }
 }
