@@ -14,51 +14,11 @@
                 <AnchorPane prefHeight="60.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER_LEFT">
                     <children>
                         <Pane layoutX="165.0" layoutY="18.0" onMouseDragged="#moveFrame" onMousePressed="#setXY" prefHeight="25.0" style="-fx-background-color: #444444;" styleClass="topbar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <HBox disable="true" layoutX="180.0" prefHeight="35.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="25.0">
-                            <children>
-                                <JFXButton prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Reload">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/folder_archive.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Save">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/directory_plus.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Add to Event">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/directory_search.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton prefHeight="35.0" prefWidth="130.0" styleClass="menuItem" text="Delete">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/cloud_down.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                            </children>
-                        </HBox>
                         <Label fx:id="Menu" layoutX="15.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="100.0" text="MENU" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
                             <graphic>
                                 <ImageView fitHeight="22.0" fitWidth="22.0" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/gallery.png" />
+                                        <Image url="@../images/arrow_left%20%5B%23391%5D.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -70,7 +30,7 @@
                             <graphic>
                                 <ImageView fitHeight="22.0" fitWidth="22.0" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/gallery.png" />
+                                        <Image url="@../images/arrow_right%20%5B%23392%5D.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -98,33 +58,21 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                     <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@../images/folder_archive.png" />
+                                                <Image url="@../images/home%20%5B%231393%5D.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#addView" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Editieren" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#addView" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Add" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                     <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true">
                                             <image>
-                                                <Image url="@../images/directory_plus.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Drucken" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="12.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/directory_search.png" />
+                                                <Image url="@../images/edit%20%5B%231482%5D.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -136,7 +84,19 @@
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../images/cloud_down.png" />
+                                                <Image url="@../images/directory_arrow_down%20%5B%231659%5D.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </JFXButton>
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Drucken" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/printer%20%5B%231598%5D.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>

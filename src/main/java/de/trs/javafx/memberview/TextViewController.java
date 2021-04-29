@@ -28,6 +28,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 
@@ -150,7 +151,7 @@ public class TextViewController extends AnchorPane implements Initializable {
      */
     @FXML
     private void deleteMember() {
-        Mitglied selctedMitglied = (Mitglied) memberTableView.getSelectionModel().getSelectedItem();
+        Mitglied selctedMitglied = memberTableView.getSelectionModel().getSelectedItem();
         log.info("DELETING " + selctedMitglied);
 
         if (selctedMitglied == null) {
@@ -160,16 +161,15 @@ public class TextViewController extends AnchorPane implements Initializable {
             alert.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText("Soll Mitglied wiklich gelöscht werden?");
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Fortfahren?", ButtonType.APPLY, ButtonType.CANCEL);
         // TODO: Mitglieder Daten schön darstellen
-        alert.setHeaderText(selctedMitglied.toString());
+        alert.setHeaderText("Soll Mitglied " + selctedMitglied.toString() + " wiklich gelöscht werden?");
         alert.setTitle("Mitglied löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
 
         log.info("ButtonType: " + buttonType.get().getText());
 
-        if (buttonType.get() == ButtonType.OK) {
+        if (buttonType.get() == ButtonType.APPLY) {
             dbService.deleteMember(selctedMitglied);
             reloadMemberView();
             reloadEventView();
@@ -177,6 +177,41 @@ public class TextViewController extends AnchorPane implements Initializable {
             log.info("Loeschvorgang abgebrochen");
         }
         log.info("END Mitglied loeschen");
+    }
+
+    @FXML
+    private void deleteEvent() {
+
+        int selectedIndex = eventChoiceBox.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex == -1) {
+            log.info("EMPTY Keine Veranstalung ausgewaehlt");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Keine Veranstalung ausgewaehlt!");
+            alert.showAndWait();
+            return;
+        }
+
+        Event selectedEvent = currentEvents.get(selectedIndex);
+        log.info("DELETING " + selectedEvent);
+
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Fortfahren?", ButtonType.APPLY, ButtonType.CANCEL);
+        alert.setContentText("");
+        alert.setHeaderText("Soll " + selectedEvent.getName() + " wiklich gelöscht werden?");
+        alert.setTitle("Event löschen?");
+        Optional<ButtonType> buttonType = alert.showAndWait();
+
+        log.info("ButtonType: " + buttonType.get().getText());
+
+        if (buttonType.get() == ButtonType.APPLY) {
+            dbService.deleteEvent(selectedEvent);
+            reloadMemberView();
+            reloadEventView();
+        } else {
+            log.info("Loeschvorgang abgebrochen");
+        }
+        log.info("END Event loeschen");
+
     }
 
     /**
@@ -244,27 +279,6 @@ public class TextViewController extends AnchorPane implements Initializable {
         ObservableList<Mitglied> mitgliedAsObservableList = mitgliedAsObservableList();
         memberTableView.setItems(mitgliedAsObservableList);
 
-        memberTableView.setRowFactory(new Callback<TableView<Mitglied>, TableRow<Mitglied>>() {
-
-            @Override
-            public TableRow<Mitglied> call(TableView<Mitglied> tableView) {
-                return new TableRow<Mitglied>() {
-                    @Override
-                    protected void updateItem(Mitglied mitglied, boolean empty) {
-                        super.updateItem(mitglied, empty);
-
-                        if (empty || mitglied == null) {
-                            this.setText(null);
-                            this.setGraphic(null);
-                            this.setStyle(null);
-                        } else if (isMemberOnReservationlist(mitglied)) {
-                            this.setStyle("-fx-background-color:lightgreen");
-
-                        }
-                    }
-                };
-            }
-        });
     }
 
     /**
@@ -332,6 +346,28 @@ public class TextViewController extends AnchorPane implements Initializable {
             eventTabel.setCellValueFactory(new PropertyValueFactory<Mitglied, String>(s));
             eventTableView.getColumns().add(eventTabel);
         }
+
+        memberTableView.setRowFactory(new Callback<TableView<Mitglied>, TableRow<Mitglied>>() {
+
+            @Override
+            public TableRow<Mitglied> call(TableView<Mitglied> tableView) {
+                return new TableRow<Mitglied>() {
+                    @Override
+                    protected void updateItem(Mitglied mitglied, boolean empty) {
+                        super.updateItem(mitglied, empty);
+
+                        if (empty || mitglied == null) {
+                            this.setText(null);
+                            this.setGraphic(null);
+                        } else if (isMemberOnReservationlist(mitglied)) {
+                            this.setStyle("-fx-background-color:lightgreen");
+                        } else {
+                            this.setStyle("");
+                        }
+                    }
+                };
+            }
+        });
 
         this.reloadMemberView();
         this.reloadEventView();

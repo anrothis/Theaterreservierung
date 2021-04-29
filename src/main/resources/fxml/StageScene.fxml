@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="textViewPane" prefHeight="500.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.TextViewController">
@@ -18,12 +19,32 @@
                      <top>
                         <AnchorPane BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <JFXButton onAction="#reloadMemberView" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Liste aktuallisieren" />
-                                    <JFXButton onAction="#addMemberToResrevationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied hinzufügen" />
-                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied zu Event hinzufügen" />
-                                    <JFXButton onAction="#deleteMember" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitgliled löschen" />
+                                    <JFXButton onAction="#addMemberToResrevationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied hinzufügen">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/profile_plus_round%20%5B%231343%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
+                                    <JFXButton onAction="#reloadMemberView" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Liste aktuallisieren">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/arrow_repeat%20%5B%23235%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
+                                    <JFXButton onAction="#deleteMember" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitgliled löschen">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/minus_circle%20%5B%231426%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
                                  </children>
                               </HBox>
                            </children>
@@ -43,11 +64,32 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <DatePicker fx:id="eventDatePicker" editable="false" onAction="#reloadEventView" showWeekNumbers="true" />
+                                    <JFXButton onAction="#removeMemberFromReservation" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied entfernen">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/profile_round%20%5B%231346%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
+                                    <JFXButton onAction="#updateReservationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Speichern">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/save_item%20%5B%231410%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
+                                    <JFXButton onAction="#deleteEvent" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Event Löschen">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/minus_circle%20%5B%231426%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></JFXButton>
                                     <ChoiceBox fx:id="eventChoiceBox" prefWidth="150.0" />
-                                    <JFXButton onAction="#removeMemberFromReservation" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Mitglied entfernen" />
-                                    <JFXButton onAction="#updateReservationList" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Speichern" />
-                                    <JFXButton prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Delete" />
+                                    <DatePicker fx:id="eventDatePicker" editable="false" onAction="#reloadEventView" showWeekNumbers="true" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />

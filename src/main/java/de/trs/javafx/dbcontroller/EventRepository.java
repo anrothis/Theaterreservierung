@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.trs.javafx.model.Event;
 
@@ -25,5 +28,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT name, location FROM Event")
     List<String> getEventsAsStrings();
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM RESERVATION WHERE EVENT_ID = :ID", nativeQuery = true)
+    void deleteEventformReservations(@Param("ID") Long id);
 
 }

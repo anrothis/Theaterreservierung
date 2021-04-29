@@ -41,7 +41,7 @@ public class Event {
     // @Column(nullable = false)
     private Date performanceDate;
     private String location;
-    @ManyToMany(targetEntity = Mitglied.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Mitglied.class, fetch = FetchType.EAGER)
     @JoinTable(name = "RESERVATION", joinColumns = @JoinColumn(name = "EVENT_ID"), inverseJoinColumns = @JoinColumn(name = "MEMBER_ID"))
     private List<Mitglied> reservationsList;
 

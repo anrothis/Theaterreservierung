@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,37 +51,13 @@ public class DbService {
         // TODO: update Memeber
     }
 
-    // @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteMember(Mitglied selectedItems) {
-        log.info("DELETE MEMBER LOADING EVENTS");
+    // @Modifying
+    // @Transactional()
+    public void deleteMember(Mitglied selectedItem) {
+        log.info("DELETE MEMBER");
 
-        // List<Event> allEvents = eventRepository.findAll();
-        // if (!allEvents.isEmpty()) {
-        // log.info("DELETE MEMBER EVENTSLIST NOT EMPTY");
-        // for (Event event : allEvents) {
-        // if (event.getReservationsList().isEmpty()) {
-        // continue;
-        // } else {
-        // List<Mitglied> reservationList = event.getReservationsList();
-        // try {
-        // for (Mitglied mitglied : reservationList) {
-        // log.info("DELETE MEMBER current Event " + mitglied);
-        // if (mitglied.getId() == selectedItems.getId()) {
-        // log.info("FOUND MEMBER: " + mitglied);
-        // reservationList.remove(mitglied);
-        // log.info("REMOVED MEMBER FROM LISR: " + reservationList);
-        // this.updateReservationList(event,
-        // FXCollections.observableList(reservationList));
-        // }
-        // }
-        // } catch (Exception e) {
-        // log.error("ERROR DELETING FROM RESERVATION", e);
-        // }
-        // }
-        // }
-        // }
-        memberRepository.deleteMemberformReservations(selectedItems.getId());
-        memberRepository.delete(selectedItems);
+        memberRepository.deleteMemberformReservations(selectedItem.getId());
+        memberRepository.delete(selectedItem);
     }
 
     public List<Mitglied> getReservationList(Event event) {
@@ -93,6 +70,11 @@ public class DbService {
     /**
      * Event Database requests
      */
+    public void deleteEvent(Event selectedEvent) {
+        log.info("DELETE EVENT");
+        // eventRepository.deleteEventformReservations(selectedEvent.getId());
+        eventRepository.delete(selectedEvent);
+    }
 
     public List<Event> getEventsByDate(Date date) {
         return eventRepository.findByPerformanceDate(date);
