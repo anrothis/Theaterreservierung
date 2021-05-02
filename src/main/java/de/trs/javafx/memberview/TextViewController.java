@@ -3,8 +3,6 @@ package de.trs.javafx.memberview;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.SplitPane;
@@ -39,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class TextViewController extends AnchorPane implements Initializable {
 
-    // TODO: Suchfunktion, Bild Sitzplätze
+    // TODO: Bild Sitzplätze
     @FXML
     private AnchorPane textViewPane;
 
@@ -60,6 +59,9 @@ public class TextViewController extends AnchorPane implements Initializable {
 
     @FXML
     private TextField filterTextField;
+
+    @FXML
+    private CheckBox filterCheck;
 
     @Autowired
     private DbService dbService;
@@ -86,9 +88,7 @@ public class TextViewController extends AnchorPane implements Initializable {
                 membersFiltered.add(mitglied);
             }
         }
-
         memberTableView.getItems().setAll(membersFiltered);
-
     }
 
     @FXML
@@ -171,9 +171,13 @@ public class TextViewController extends AnchorPane implements Initializable {
 
         log.info("ADDED Member to Reservation List");
         eventTableView.getItems().add(selctedMitglied);
-        memberTableView.getSelectionModel().selectNext();
 
-        // memberTableView.getSelectionModel().selectBelowCell();
+        if (filterCheck.isSelected()) {
+            reloadMemberView();
+            memberTableView.getSelectionModel().selectFirst();
+        } else {
+            memberTableView.getSelectionModel().selectNext();
+        }
     }
 
     /**
@@ -223,14 +227,14 @@ public class TextViewController extends AnchorPane implements Initializable {
         alert.setTitle("Mitglied löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
 
-        log.info("ButtonType: " + buttonType.get().getText());
+        log.info("DELETE ButtonType: " + buttonType.get().getText());
 
         if (buttonType.get() == ButtonType.APPLY) {
             dbService.deleteMember(selctedMitglied);
             reloadMemberView();
             reloadEventView();
         } else {
-            log.info("Loeschvorgang abgebrochen");
+            log.info("DELETE Loeschvorgang abgebrochen");
         }
         log.info("END Mitglied loeschen");
     }
@@ -257,14 +261,14 @@ public class TextViewController extends AnchorPane implements Initializable {
         alert.setTitle("Event löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
 
-        log.info("ButtonType: " + buttonType.get().getText());
+        log.info("DELETE ButtonType: " + buttonType.get().getText());
 
         if (buttonType.get() == ButtonType.APPLY) {
             dbService.deleteEvent(selectedEvent);
             reloadMemberView();
             reloadEventView();
         } else {
-            log.info("Loeschvorgang abgebrochen");
+            log.info("DELETE Loeschvorgang abgebrochen");
         }
         log.info("END Event loeschen");
 
@@ -331,7 +335,19 @@ public class TextViewController extends AnchorPane implements Initializable {
     @FXML
     private void reloadMemberView() {
         ObservableList<Mitglied> mitgliedAsObservableList = mitgliedAsObservableList();
-        memberTableView.setItems(mitgliedAsObservableList);
+        ObservableList<Mitglied> filteredList = FXCollections.observableArrayList();
+
+        if (filterCheck.isSelected() && !mitgliedAsObservableList.isEmpty()) {
+            log.info("DEBUG Filter Check" + filterCheck.isArmed());
+            for (Mitglied mitglied : mitgliedAsObservableList) {
+                if (!isMemberOnReservationlist(mitglied)) {
+                    filteredList.add(mitglied);
+                }
+            }
+            memberTableView.setItems(filteredList);
+        } else {
+            memberTableView.setItems(mitgliedAsObservableList);
+        }
 
     }
 
