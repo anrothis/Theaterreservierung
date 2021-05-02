@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class CsvHandler {
     private static List<List<String>> csvList;
     public static final String MEMBER_CSV_NAME = "MitgliederListe.csv";
     public static final String EVENT_CSV_NAME = "EventListe.csv";
+    public static final String RESERVATION_CSV_NAME = "ReservationList.csv";
     public static final char DEFAULT_CSV_SEPARATOR = ';';
     public static final char DEFAULT_OBJECT_SEPARATOR = ',';
 
@@ -247,6 +249,83 @@ public class CsvHandler {
 
         public static ArrayList<Event> getEventfromCSV(boolean hasTitel, char seperator) {
             return getEventfromCSV(CsvHandler.EVENT_CSV_NAME, hasTitel, seperator);
+        }
+
+        /**
+         * wandelt ein übergebenes {@Event} Object Liste in eine HashMap<Long,
+         * HashMap<String, String>> und übergibt diese an den CSVHandler.csvSave().
+         * 
+         * @param events Optional List von Events
+         * @param string Name der CSV Datei
+         */
+        public static void saveCSVfromEvents(List<Event> events, String csvName) {
+
+            ArrayList<List<String>> listOfStringLists = new ArrayList<>();
+
+            if (events != null && !events.isEmpty()) {
+
+                HashMap<Long, HashMap<String, String>> eventsHashMap = new HashMap<>();
+                HashMap<String, String> eventHash = new HashMap<>();
+                for (Event event : events) {
+                    /** Hash approach */
+                    eventHash = eventToHashMap(event, CsvHandler.DEFAULT_OBJECT_SEPARATOR);
+                    eventsHashMap.put(event.getId(), eventHash);
+                }
+
+                SortedSet<String> keysSorted = new TreeSet<>(eventHash.keySet());
+
+                listOfStringLists.add(keysSorted.stream().collect(Collectors.toList()));
+
+                for (Long eventId : eventsHashMap.keySet()) {
+                    ArrayList<String> stringListOfMitglieder = new ArrayList<>();
+                    for (String key : keysSorted) {
+
+                        stringListOfMitglieder.add(eventsHashMap.get(eventId).get(key));
+                    }
+                    // log.info("CSV TO MEMBER : " + stringListOfMitglieder.toString());
+                    listOfStringLists.add(stringListOfMitglieder);
+                }
+                CsvHandler.saveCSV(csvName, listOfStringLists);
+            } else {
+                CsvHandler.saveCSV(csvName, new ArrayList<List<String>>());
+            }
+        }
+
+        /**
+         * Wandelt ein {@Event} Objekt in eine HashMap<String, String> um. Achtung,
+         * reihenfolge wird nicht gespeichert.
+         * 
+         * @param event     Objekt der Klasse {@Event}.
+         * @param seperator Trennzeichen der {@Event.toString} Methode
+         * @return gibt eine HashMap mit den K,V Paare der Parameter von
+         *         {@Event} zurück.
+         */
+        public static HashMap<String, String> eventToHashMap(Event event, char seperator) {
+            String eventString = event.toString();
+            // log.info("REGEX TEST: " + mitgliedString);
+
+            HashMap<String, String> map = new HashMap<>();
+            String[] argsAsArray = eventString.split("^Event \\[|" + seperator + "|\\]");
+            // log.info("REGEX ARGS COUNT: " + argsAsArray2.length);
+            for (String string : argsAsArray) {
+                if (string.isBlank()) {
+                    continue;
+                }
+                string = string.trim();
+                String[] keyValuePair = string.split("=");
+                String[] fiexeSizeString = new String[2];
+                fiexeSizeString[0] = keyValuePair[0];
+                fiexeSizeString[1] = "";
+                if (keyValuePair.length > 1) {
+                    fiexeSizeString[1] = keyValuePair[1];
+                }
+                map.put(fiexeSizeString[0], fiexeSizeString[1].trim());
+
+                // log.info("KEY VALUE PAIR FIXED LENGTH " + fiexeSizeString.length);
+                // log.info("REGEX K,V PAIR" + fiexeSizeString[0] + " : " + argsAsArray2[1]);
+            }
+            // log.info("REGEX HASHMAP " + map.toString());
+            return map;
         }
     }
 
