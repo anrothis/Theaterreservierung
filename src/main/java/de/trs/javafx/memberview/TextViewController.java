@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.trs.javafx.dbcontroller.DbService;
+import de.trs.javafx.model.CsvHandler;
 import de.trs.javafx.model.Event;
 import de.trs.javafx.model.Mitglied;
 import javafx.collections.FXCollections;
@@ -58,6 +59,15 @@ public class TextViewController extends AnchorPane implements Initializable {
     private DbService dbService;
 
     private ObservableList<Event> currentEvents;
+
+    @FXML
+    private void exportMembersToCSV() {
+        log.info("EXPORTING CSV MEMBERLIST");
+
+        // CsvHandler.ParseMemberList.saveCSVfromMember(memberTableView.getItems(),
+        // CsvHandler.MEMBER_CSV_NAME);
+        CsvHandler.ParseMemberList.saveCSVfromMember(dbService.getMembers(), CsvHandler.MEMBER_CSV_NAME);
+    }
 
     /**
      * Die Reservierugsliste eines Events wird auf den aktuellen Stand überschrieben
@@ -141,6 +151,7 @@ public class TextViewController extends AnchorPane implements Initializable {
         }
         eventTableView.getItems().remove(selctedMitglied);
         updateReservationList();
+        reloadMemberView();
     }
 
     /**

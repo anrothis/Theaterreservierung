@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import de.trs.javafx.JavafxApplication;
@@ -86,17 +87,18 @@ public class CsvHandler {
         try (BufferedWriter csvWriter = new BufferedWriter(new FileWriter(file))) {
             log.info("LOADING CSV FILEWRITER");
 
-            log.info("WRITING Member Array");
+            // log.info("WRITING Member Array " + arrayList.toString());
+            String line = "";
             for (List<String> list : arrayList) {
-                String line = "";
                 for (String element : list) {
                     line += element + CsvHandler.DEFAULT_CSV_SEPARATOR;
                 }
-                log.info("WRITING Member Array Line " + line);
-                csvWriter.write(line);
-                csvWriter.newLine();
-                csvWriter.flush();
+                // log.info("WRITING Member Array Line " + line);
+                line += "\n";
             }
+            csvWriter.write(line);
+            // csvWriter.newLine();
+            csvWriter.flush();
             log.info("END WRITING CSV FILE");
         } catch (Exception e) {
             log.error("ERROR WRITING CSV FILE", e);
@@ -149,7 +151,7 @@ public class CsvHandler {
          * @param mitglieder Optional List von Mitgliedern
          * @param string     Name der CSV Datei
          */
-        public static void saveCSVfromMember(ObservableList<Mitglied> mitglieder, String csvName) {
+        public static void saveCSVfromMember(List<Mitglied> mitglieder, String csvName) {
 
             ArrayList<List<String>> listOfStringLists = new ArrayList<>();
 
@@ -164,21 +166,20 @@ public class CsvHandler {
                 }
 
                 SortedSet<String> keysSorted = new TreeSet<>(memberHash.keySet());
-                ArrayList<String> stringListOfMitglieder = new ArrayList<>();
 
                 listOfStringLists.add(keysSorted.stream().collect(Collectors.toList()));
 
                 for (Long mitgliedId : mitgliederHashMap.keySet()) {
+                    ArrayList<String> stringListOfMitglieder = new ArrayList<>();
                     for (String key : keysSorted) {
 
                         stringListOfMitglieder.add(mitgliederHashMap.get(mitgliedId).get(key));
                     }
-                    log.info("CSV TO MEMBER : " + stringListOfMitglieder.toString());
+                    // log.info("CSV TO MEMBER : " + stringListOfMitglieder.toString());
                     listOfStringLists.add(stringListOfMitglieder);
                 }
                 CsvHandler.saveCSV(csvName, listOfStringLists);
             } else {
-                // TODO: CSV Name frei wählbar
                 CsvHandler.saveCSV(csvName, new ArrayList<List<String>>());
             }
         }
@@ -194,14 +195,29 @@ public class CsvHandler {
          */
         public static HashMap<String, String> memberToHashMap(Mitglied mitglied, char seperator) {
             String mitgliedString = mitglied.toString();
-            log.info("REGEX TEST");
-            String[] argsAsArray = mitgliedString.split("^Mitglied \\[|=|" + seperator + "|\\]");
+            // log.info("REGEX TEST: " + mitgliedString);
+
             HashMap<String, String> map = new HashMap<>();
-            for (int i = 1; i < argsAsArray.length; i = i + 2) {
-                log.info("REGEX " + argsAsArray[i].trim() + " : " + argsAsArray[i + 1]);
-                map.put(argsAsArray[i].trim(), argsAsArray[i + 1].trim());
+            String[] argsAsArray2 = mitgliedString.split("^Mitglied \\[|" + seperator + "|\\]");
+            // log.info("REGEX ARGS COUNT: " + argsAsArray2.length);
+            for (String string : argsAsArray2) {
+                if (string.isBlank()) {
+                    continue;
+                }
+                string = string.trim();
+                String[] keyValuePair = string.split("=");
+                String[] fiexeSizeString = new String[2];
+                fiexeSizeString[0] = keyValuePair[0];
+                fiexeSizeString[1] = "";
+                if (keyValuePair.length > 1) {
+                    fiexeSizeString[1] = keyValuePair[1];
+                }
+                map.put(fiexeSizeString[0], fiexeSizeString[1].trim());
+
+                // log.info("KEY VALUE PAIR FIXED LENGTH " + fiexeSizeString.length);
+                // log.info("REGEX K,V PAIR" + fiexeSizeString[0] + " : " + argsAsArray2[1]);
             }
-            log.info("REGEX " + map.toString());
+            // log.info("REGEX HASHMAP " + map.toString());
             return map;
         }
     }
