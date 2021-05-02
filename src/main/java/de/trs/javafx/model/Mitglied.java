@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.ToString;
+
 @Entity
 public class Mitglied {
 
@@ -24,17 +26,38 @@ public class Mitglied {
     // @Column(unique = true)
     private String seat;
     // @OneToOne
-    private String uniqueSeat;
+    private String seatAlt;
 
-    public Mitglied() {
-    }
-
-    public Mitglied(String nName, String vName, String seat) {
+    /** All Args Konstruktor */
+    public Mitglied(long id, String nName, String vName, String street, String zipCode, String town, String telephone,
+            String email, String seat, String seatAlt) {
+        this.id = id;
         this.nName = nName;
         this.vName = vName;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.town = town;
+        this.telephone = telephone;
+        this.email = email;
         this.seat = seat;
+        this.seatAlt = seatAlt;
     }
 
+    /** used by {@link CsvHandler} */
+    public Mitglied(String nName, String vName, String street, String zipCode, String town, String telephone,
+            String email, String seat, String seatAlt) {
+        this.nName = nName;
+        this.vName = vName;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.town = town;
+        this.telephone = telephone;
+        this.email = email;
+        this.seat = seat;
+        this.seatAlt = seatAlt;
+    }
+
+    /** Reduzierter Konstruktor */
     public Mitglied(long id, String nName, String vName, String street, String zipCode, String town, String telephone,
             String email, String seat) {
         this.id = id;
@@ -46,6 +69,25 @@ public class Mitglied {
         this.telephone = telephone;
         this.email = email;
         this.seat = seat;
+    }
+
+    /** minimal Implementation Konstruktor */
+    public Mitglied(String nName, String vName, String seat) {
+        this.nName = nName;
+        this.vName = vName;
+        this.seat = seat;
+    }
+
+    /** No Args Konstruktor */
+    public Mitglied() {
+    }
+
+    public String getSeatAlt() {
+        return seatAlt;
+    }
+
+    public void setSeatAlt(String seatAlt) {
+        this.seatAlt = seatAlt;
     }
 
     public String getNName() {
@@ -112,12 +154,6 @@ public class Mitglied {
         this.seat = seat;
     }
 
-    @Override
-    public String toString() {
-        return "Mitglied [email=" + email + ", nName=" + nName + ", seat=" + seat + ", street=" + street
-                + ", telephone=" + telephone + ", town=" + town + ", vName=" + vName + ", zipCode=" + zipCode + "]";
-    }
-
     public long getId() {
         return id;
     }
@@ -126,15 +162,10 @@ public class Mitglied {
         this.id = id;
     }
 
-    public Mitglied(String nName, String vName, String street, String zipCode, String town, String telephone,
-            String email, String seat) {
-        this.nName = nName;
-        this.vName = vName;
-        this.street = street;
-        this.zipCode = zipCode;
-        this.town = town;
-        this.telephone = telephone;
-        this.email = email;
-        this.seat = seat;
+    @Override
+    public String toString() {
+        return "Mitglied [email=" + email + ", id=" + id + ", nName=" + nName + ", seat=" + seat + ", seatAlt="
+                + seatAlt + ", street=" + street + ", telephone=" + telephone + ", town=" + town + ", vName=" + vName
+                + ", zipCode=" + zipCode + "]";
     }
 }
