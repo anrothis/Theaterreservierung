@@ -3,6 +3,8 @@ package de.trs.javafx.memberview;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -55,10 +58,38 @@ public class TextViewController extends AnchorPane implements Initializable {
     @FXML
     private ChoiceBox<String> eventChoiceBox;
 
+    @FXML
+    private TextField filterTextField;
+
     @Autowired
     private DbService dbService;
 
     private ObservableList<Event> currentEvents;
+
+    @FXML
+    private void filterMemberTableView() {
+        memberTableView.getItems().clear();
+        String filterString = filterTextField.getText().toLowerCase().trim();
+        ObservableList<Mitglied> members = mitgliedAsObservableList();
+        ObservableList<Mitglied> membersFiltered = FXCollections.observableArrayList();
+
+        for (Mitglied mitglied : members) {
+
+            String trim = filterString.trim();
+            String[] args = trim.split(" ");
+            String regex = ""; // (?=.*Ried.*)(?=.*012.*)(?=.*askld.*).*
+            for (String arg : args) {
+                regex += "(?=.*" + arg + ".*).*";
+            }
+            // log.info("DEBUG FILTER REGEX STRING " + regex);
+            if (mitglied.toString().toLowerCase().matches(regex)) {
+                membersFiltered.add(mitglied);
+            }
+        }
+
+        memberTableView.getItems().setAll(membersFiltered);
+
+    }
 
     @FXML
     private void exportMembersToCSV() {
@@ -69,11 +100,14 @@ public class TextViewController extends AnchorPane implements Initializable {
         List<Mitglied> members = dbService.getMembers();
         CsvHandler.ParseMemberList.saveCSVfromMember(members, fileName);
 
-        fileName = eventDatePicker.getValue() + "_" + CsvHandler.RESERVATION_CSV_NAME;
-        log.info("EXPORTING Reservation " + fileName);
-        ObservableList<Mitglied> reservationAsObservableList = reservationAsObservableList(
-                eventChoiceBox.getSelectionModel().getSelectedIndex());
-        CsvHandler.ParseMemberList.saveCSVfromMember(reservationAsObservableList, fileName);
+        if (eventChoiceBox.getSelectionModel().getSelectedIndex() != -1) {
+
+            fileName = eventDatePicker.getValue() + "_" + CsvHandler.RESERVATION_CSV_NAME;
+            log.info("EXPORTING Reservation " + fileName);
+            ObservableList<Mitglied> reservationAsObservableList = reservationAsObservableList(
+                    eventChoiceBox.getSelectionModel().getSelectedIndex());
+            CsvHandler.ParseMemberList.saveCSVfromMember(reservationAsObservableList, fileName);
+        }
     }
 
     /**
