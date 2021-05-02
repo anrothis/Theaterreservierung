@@ -58,6 +58,14 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="filterTextField" onKeyTyped="#filterMemberTableView" />
+                                    <CheckBox fx:id="filterCheck" mnemonicParsing="false" onAction="#reloadMemberView" text="nur neu">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </CheckBox>
                                     <JFXButton onAction="#exportMembersToCSV" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Exportieren">
                                        <graphic>
                                           <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
