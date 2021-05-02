@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="textViewPane" prefHeight="500.0" prefWidth="834.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.TextViewController">
+<AnchorPane fx:id="textViewPane" prefHeight="500.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.TextViewController">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.498989898989899" orientation="VERTICAL" prefWidth="900.0" style="-fx-background-color: #555555;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -57,12 +57,12 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="filterTextField" />
+                                    <TextField fx:id="filterTextField" onKeyTyped="#filterMemberTableView" />
                                     <JFXButton onAction="#exportMembersToCSV" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Exportieren">
                                        <graphic>
                                           <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../images/arrow_repeat%20%5B%23235%5D.png" />
+                                                <Image url="@../images/directory_arrow_down%20%5B%231659%5D.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
