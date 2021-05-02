@@ -1,8 +1,10 @@
+
+src/main/resources/csv/test1.csv
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/main/resources/csv
 !**/src/test/**/target/
 
 ### STS ###
@@ -32,3 +34,4 @@ build/
 
 ### VS Code ###
 .vscode/
+
