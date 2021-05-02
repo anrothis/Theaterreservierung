@@ -80,7 +80,8 @@ public class ImportSceneController {
                 try {
                     log.info("LOADING FILE");
                     ArrayList<Mitglied> tempList = CsvHandler.ParseMemberList
-                            .getMemberfromCSV(filePathTextField.getText(), hasTitle.isArmed());
+                            // TODO: seperator Abfrage in UI einbauen
+                            .getMemberfromCSV(filePathTextField.getText(), hasTitle.isArmed(), ';');
                     // TODO: load list to ListView
 
                 } catch (Exception e) {

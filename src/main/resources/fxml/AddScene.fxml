@@ -4,8 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="430.0" prefWidth="700.0" stylesheets="@AddScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.AddSceneController">
+<AnchorPane prefHeight="450.0" prefWidth="700.0" stylesheets="@AddScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.AddSceneController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -43,11 +42,13 @@
                                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
                                           <TextField fx:id="seatTextField" />
+                                          <TextField fx:id="seatAltTextField" />
                                        </children>
                                     </VBox>
                                     <VBox GridPane.rowIndex="1">
                                        <children>
                                           <Label text="Sitzplatz" />
+                                          <Label text="Alt. Sitzplatz" />
                                        </children>
                                     </VBox>
                                     <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">

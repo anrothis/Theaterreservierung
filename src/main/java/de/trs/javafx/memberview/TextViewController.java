@@ -28,7 +28,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 
@@ -161,9 +160,11 @@ public class TextViewController extends AnchorPane implements Initializable {
             alert.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Fortfahren?", ButtonType.APPLY, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "Soll Mitglied " + selctedMitglied.toString() + " wiklich gelöscht werden?", ButtonType.APPLY,
+                ButtonType.CANCEL);
         // TODO: Mitglieder Daten schön darstellen
-        alert.setHeaderText("Soll Mitglied " + selctedMitglied.toString() + " wiklich gelöscht werden?");
+        alert.setHeaderText("Fortfahren?");
         alert.setTitle("Mitglied löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
 
@@ -195,9 +196,9 @@ public class TextViewController extends AnchorPane implements Initializable {
         Event selectedEvent = currentEvents.get(selectedIndex);
         log.info("DELETING " + selectedEvent);
 
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Fortfahren?", ButtonType.APPLY, ButtonType.CANCEL);
-        alert.setContentText("");
-        alert.setHeaderText("Soll " + selectedEvent.getName() + " wiklich gelöscht werden?");
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "Soll " + selectedEvent.getName() + " wiklich gelöscht werden?", ButtonType.APPLY, ButtonType.CANCEL);
+        alert.setHeaderText("Fortfahren?");
         alert.setTitle("Event löschen?");
         Optional<ButtonType> buttonType = alert.showAndWait();
 
@@ -271,8 +272,6 @@ public class TextViewController extends AnchorPane implements Initializable {
     /**
      * Erneutes Laden der Mitglieder TextView.
      * 
-     * Modifizieren der RowFacktory, damit Mitglieder, welche bereits auf der Event
-     * TableView stehen, grün hinterlegt werden.
      */
     @FXML
     private void reloadMemberView() {
@@ -323,17 +322,20 @@ public class TextViewController extends AnchorPane implements Initializable {
 
     /**
      * Initiales erzeugen der TableView Elemente
+     * 
+     * Modifizieren der RowFacktory, damit Mitglieder, welche bereits auf der Event
+     * TableView stehen, grün hinterlegt werden.
      */
     private void generateTableView() {
         /**
          * initialisieren der Mitglieder TabelView
          */
-        List<String> columnTitles = List.of("Sitzplatz", "Nachname", "Vorname", "Strasse", "PLZ", "Stadt", "Telefon",
-                "Email");
-
+        List<String> columnTitles = List.of("Sitzplatz", "Alt. Sitzplatz", "Nachname", "Vorname", "Strasse", "PLZ",
+                "Stadt", "Telefon", "Email");
         Iterator<String> titleIterator = columnTitles.iterator();
 
-        String[] attributeTitles = { "seat", "nName", "vName", "street", "zipCode", "town", "telephone", "email" };
+        String[] attributeTitles = { "seat", "seatAlt", "nName", "vName", "street", "zipCode", "town", "email",
+                "telephone" };
         for (String s : attributeTitles) {
 
             String title = titleIterator.next();
@@ -348,7 +350,6 @@ public class TextViewController extends AnchorPane implements Initializable {
         }
 
         memberTableView.setRowFactory(new Callback<TableView<Mitglied>, TableRow<Mitglied>>() {
-
             @Override
             public TableRow<Mitglied> call(TableView<Mitglied> tableView) {
                 return new TableRow<Mitglied>() {

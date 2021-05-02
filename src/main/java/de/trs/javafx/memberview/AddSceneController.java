@@ -37,6 +37,9 @@ public class AddSceneController implements Initializable {
     private TextField seatTextField;
 
     @FXML
+    private TextField seatAltTextField;
+
+    @FXML
     private TextField streetTextField;
 
     @FXML
@@ -91,12 +94,14 @@ public class AddSceneController implements Initializable {
     private void addMember() {
         Mitglied mitglied = new Mitglied(lastnameTextField.getText(), firstnameTextField.getText(),
                 streetTextField.getText(), postcodeTextField.getText(), townTextField.getText(),
-                telephoneTextField.getText(), emailTextField.getText(), seatTextField.getText());
+                telephoneTextField.getText(), emailTextField.getText(), seatTextField.getText(),
+                seatAltTextField.getText());
 
         if ((lastnameTextField.getText().equals("") && firstnameTextField.getText().equals("")
                 && streetTextField.getText().equals("") && postcodeTextField.getText().equals("")
                 && townTextField.getText().equals("") && telephoneTextField.getText().equals("")
-                && emailTextField.getText().equals("") && seatTextField.getText().equals(""))) {
+                && emailTextField.getText().equals("") && seatTextField.getText().equals("")
+                && seatAltTextField.getText().equals(""))) {
 
             Alert alert = new Alert(AlertType.INFORMATION, "Bitte mindestens ein Feld ausfüllen.", ButtonType.OK);
             alert.showAndWait();
@@ -141,6 +146,7 @@ public class AddSceneController implements Initializable {
         telephoneTextField.setText("");
         emailTextField.setText("");
         seatTextField.setText("");
+        seatAltTextField.setText("");
     }
 
     @FXML
