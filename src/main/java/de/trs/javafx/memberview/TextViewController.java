@@ -64,9 +64,16 @@ public class TextViewController extends AnchorPane implements Initializable {
     private void exportMembersToCSV() {
         log.info("EXPORTING CSV MEMBERLIST");
 
-        // CsvHandler.ParseMemberList.saveCSVfromMember(memberTableView.getItems(),
-        // CsvHandler.MEMBER_CSV_NAME);
-        CsvHandler.ParseMemberList.saveCSVfromMember(dbService.getMembers(), CsvHandler.MEMBER_CSV_NAME);
+        String fileName = LocalDate.now() + "_" + CsvHandler.MEMBER_CSV_NAME;
+        log.info("EXPORTING Mitglieder " + fileName);
+        List<Mitglied> members = dbService.getMembers();
+        CsvHandler.ParseMemberList.saveCSVfromMember(members, fileName);
+
+        fileName = eventDatePicker.getValue() + "_" + CsvHandler.RESERVATION_CSV_NAME;
+        log.info("EXPORTING Reservation " + fileName);
+        ObservableList<Mitglied> reservationAsObservableList = reservationAsObservableList(
+                eventChoiceBox.getSelectionModel().getSelectedIndex());
+        CsvHandler.ParseMemberList.saveCSVfromMember(reservationAsObservableList, fileName);
     }
 
     /**
@@ -130,6 +137,9 @@ public class TextViewController extends AnchorPane implements Initializable {
 
         log.info("ADDED Member to Reservation List");
         eventTableView.getItems().add(selctedMitglied);
+        memberTableView.getSelectionModel().selectNext();
+
+        // memberTableView.getSelectionModel().selectBelowCell();
     }
 
     /**
