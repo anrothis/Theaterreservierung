@@ -10,8 +10,10 @@ import java.util.TreeSet;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import de.trs.javafx.dbcontroller.DbService;
 import de.trs.javafx.model.CsvHandler;
 import de.trs.javafx.model.Mitglied;
 import javafx.collections.FXCollections;
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 class JavafxApplicationTests {
     static Mitglied mitglied;
     static HashMap<String, String> hashMap;
+    @Autowired
+    static DbService dbService;
 
     @BeforeAll
     static void init() {
@@ -82,5 +86,13 @@ class JavafxApplicationTests {
         CsvHandler.ParseMemberList.saveCSVfromMember(mitgliederList, csvName);
         assertTrue(JavafxApplication.class.getResource("/csv/" + csvName).getFile() != null,
                 "MEMBER CSV FILE " + csvName + " nicht angelegt");
+    }
+
+    @Test
+    void saveMemberTableViewToCSVTest() {
+        String csvName = "TestCSVSave3" + ".csv";
+        // CsvHandler.ParseMemberList.saveCSVfromMember(dbService.getMembers(),
+        // csvName);
+
     }
 }

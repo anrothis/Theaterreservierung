@@ -58,6 +58,15 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="filterTextField" />
+                                    <JFXButton onAction="#exportMembersToCSV" prefHeight="35.0" prefWidth="160.0" styleClass="menuItem" text="Exportieren">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/arrow_repeat%20%5B%23235%5D.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
                                  </children>
                               </HBox>
                            </children>
