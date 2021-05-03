@@ -5,18 +5,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Date;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import de.trs.javafx.JavafxApplication;
-import javafx.collections.ObservableList;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

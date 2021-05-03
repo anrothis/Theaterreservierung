@@ -2,7 +2,7 @@ package de.trs.javafx.memberview;
 
 public enum SwitchScene {
     TABLEVIEW("/fxml/StageScene.fxml"), SEARCHVIEW("/fxml/SearchScene.fxml"), ADDVIEW("/fxml/AddScene.fxml"),
-    IMPORTVIEW("/fxml/ImportScene.fxml");
+    IMPORTVIEW("/fxml/ImportScene.fxml"), PRINTVIEW("/fxml/PrintScene.fxml");
 
     private final String fxmlPath;
 

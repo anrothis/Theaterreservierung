@@ -89,7 +89,7 @@
                                         </ImageView>
                                     </graphic>
                                 </JFXButton>
-                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Drucken" textFill="WHITE">
+                                <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" onAction="#printerView" prefHeight="40.0" prefWidth="100.0" styleClass="sidebarItem" text="Drucken" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>

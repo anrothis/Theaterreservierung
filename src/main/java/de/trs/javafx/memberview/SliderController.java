@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -40,12 +41,22 @@ public class SliderController implements Initializable {
     private ApplicationContext context;
     private double x, y;
 
+    /**
+     * depricated: getting window position
+     * 
+     * @param event
+     */
     @FXML
     void setXY(MouseEvent event) {
         x = event.getSceneX();
         y = event.getSceneY();
     }
 
+    /**
+     * depricated; moving window by mousclick
+     * 
+     * @param event
+     */
     @FXML
     void moveFrame(MouseEvent event) {
         double xs = event.getScreenX() - x;
@@ -83,6 +94,25 @@ public class SliderController implements Initializable {
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
         }
+    }
+
+    @FXML
+    void printerView(ActionEvent event) {
+        try {
+            Parent root = reloadFxml(SwitchScene.PRINTVIEW.getFxml());
+            borderPane.setCenter(root);
+        } catch (Exception e) {
+            log.error("ERROR Loading FXML TableView", e);
+        }
+    }
+
+    @FXML
+    void printReservation() {
+        log.info("PRINT START");
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        printerJob.showPageSetupDialog(null);
+        printerJob.showPrintDialog(null);
+
     }
 
     /**
