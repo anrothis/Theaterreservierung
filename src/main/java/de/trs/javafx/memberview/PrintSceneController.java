@@ -16,17 +16,34 @@ import de.trs.javafx.model.Event;
 import de.trs.javafx.model.Mitglied;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.Printer.MarginType;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,6 +52,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class PrintSceneController implements Initializable {
+
+    @FXML
+    private BorderPane borderPane;
+
+    @FXML
+    private AnchorPane textPreview;
 
     @FXML
     private DatePicker eventDatePicker;
@@ -52,12 +75,111 @@ public class PrintSceneController implements Initializable {
     private TableView<Mitglied> reservationTableView;
 
     @FXML
-    void printReservation() {
-        log.info("PRINT START");
-        PrinterJob printerJob = PrinterJob.createPrinterJob();
-        printerJob.showPageSetupDialog(null);
-        printerJob.showPrintDialog(null);
+    private TextFlow textFlowPane;
 
+    @FXML
+    void printReservation(ActionEvent event) {
+
+        log.info("PRINT START");
+        Printer printer = Printer.getDefaultPrinter();
+
+        for (Printer p : Printer.getAllPrinters()) {
+            log.info("PRINT PRINTER available " + p.getName());
+            if (p.getName().contains("Microsoft Print to PDF")) {
+                printer = p;
+            }
+        }
+        PrinterJob printerJob = PrinterJob.createPrinterJob(printer);
+
+        PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+
+        double scaleX = pageLayout.getPrintableWidth();
+        double scaleY = pageLayout.getPrintableHeight();
+
+        ObservableList<Mitglied> reservationList = reservationAsObservableList();
+        int size = reservationList.size();
+
+        // textFlowPane.getChildren().clear();
+        // textFlowPane.getChildren().add(new Label(mitglied.getNName() + "\n" +
+        // mitglied.getSeat()));
+
+        VBox rows = new VBox();
+        rows.setAlignment(Pos.CENTER);
+        // rows.setPadding(new Insets(20));
+
+        rows.setSpacing(10);
+        rows.setMinWidth(scaleX);
+        rows.setPrefWidth(scaleX);
+        rows.setFillWidth(true);
+
+        HBox col = createHBox(scaleY, rows);
+        GridPane printGrid = createGridPane(scaleX, scaleY);
+
+        int rowCounter = 0;
+        int colCounter = 0;
+        int colCount = 2;
+        int vRowsCount = (size % colCount != 0) ? size / colCount + 1 : size / colCount;
+        for (int i = 0; i < size; i++) {
+
+            Mitglied mitglied = reservationList.get(i);
+            TextFlow card = new TextFlow();
+            card.setPadding(new Insets(5.));
+            card.getChildren().add(new Label("Name: " + mitglied.getNName() + " " + mitglied.getVName()
+                    + "\n\nSitzplatz: " + mitglied.getSeat()));
+            card.setPrefWidth(scaleX / colCount);
+            card.setTextAlignment(TextAlignment.LEFT);
+
+            col.getChildren().add(card);
+            if (i % colCount != 0) {
+                col = createHBox(scaleY, rows);
+            }
+
+            printGrid.add(card, colCounter, rowCounter);
+            colCounter = (i % colCount == 0) ? colCounter + 1 : 0;
+            rowCounter = (colCounter % colCount == 0) ? rowCounter + 1 : rowCounter;
+        }
+
+        AnchorPane printPane = new AnchorPane();
+
+        printPane.getChildren().add(printGrid);
+        // printPane.getChildren().add(rows);
+        AnchorPane.setTopAnchor(rows, 0.);
+        AnchorPane.setBottomAnchor(rows, 0.);
+        AnchorPane.setLeftAnchor(rows, 0.);
+        AnchorPane.setRightAnchor(rows, 0.);
+        // textPreview.setTranslateY(-500);
+        // borderPane.setBottom(textPreview);
+
+        printerJob.printPage(pageLayout, printPane);
+        printerJob.endJob();
+
+        // Stage printPage = new Stage(StageStyle.DECORATED);
+        // boolean success = printerJob.showPageSetupDialog(printPage);
+        // boolean success = printerJob.showPrintDialog(printPage.getOwner());
+        // if (success) {
+        // }
+
+    }
+
+    private HBox createHBox(double scaleY, VBox rows) {
+        HBox col = new HBox();
+        col.setSpacing(20);
+        col.setAlignment(Pos.CENTER_LEFT);
+        col.setPadding(new Insets(20));
+        col.setPrefHeight(scaleY / memberPerPageSpinner.getValue());
+        rows.getChildren().add(col);
+        return col;
+    }
+
+    private GridPane createGridPane(double scaleX, double scaleY) {
+
+        GridPane printGridPane = new GridPane();
+        printGridPane.setGridLinesVisible(true);
+
+        printGridPane.setPrefHeight(scaleY);
+        printGridPane.setPrefWidth(scaleX);
+
+        return printGridPane;
     }
 
     @Autowired
@@ -148,6 +270,7 @@ public class PrintSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        borderPane.setBottom(null);
         memberPerPageSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 8));
         eventDatePicker.setValue(LocalDate.now());
         eventDatePicker.setOnAction(e -> {
@@ -160,28 +283,6 @@ public class PrintSceneController implements Initializable {
             reservationTableView.getItems().clear();
             this.loadReservationList();
         });
-
-        // eventComboBox.setCellFactory(new Callback<ListView<Event>, ListCell<Event>>()
-        // {
-        // @Override
-        // public ListCell<Event> call(ListView<Event> listView) {
-        // return new ListCell<Event>() {
-        // @Override
-        // protected void updateItem(Event event, boolean empty) {
-        // super.updateItem(event, empty);
-
-        // if (empty || event == null) {
-        // this.setText(null);
-        // this.setGraphic(null);
-        // // } else if (isMemberOnReservationlist(event)) {
-        // // this.setStyle("-fx-background-color:lightgreen");
-        // } else {
-        // ;
-        // }
-        // }
-        // };
-        // }
-        // });
 
         this.loadEvents();
         this.generateTableView();
