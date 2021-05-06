@@ -35,6 +35,8 @@ public class SliderController implements Initializable {
     @FXML
     private Label MenuBack;
     @FXML
+    private Label titleLabel;
+    @FXML
     private AnchorPane slider;
 
     @Autowired
@@ -53,7 +55,7 @@ public class SliderController implements Initializable {
     }
 
     /**
-     * depricated; moving window by mousclick
+     * depricated: moving window by mousclick
      * 
      * @param event
      */
@@ -61,7 +63,6 @@ public class SliderController implements Initializable {
     void moveFrame(MouseEvent event) {
         double xs = event.getScreenX() - x;
         double ys = event.getScreenY() - y;
-
         Stage.getWindows().get(0).setX(xs);
         Stage.getWindows().get(0).setY(ys);
     }
@@ -70,6 +71,7 @@ public class SliderController implements Initializable {
     void mainView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.TABLEVIEW.getFxml());
+            titleLabel.setText("Terminverwaltung");
             borderPane.setCenter(root);
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
@@ -80,6 +82,7 @@ public class SliderController implements Initializable {
     void importView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.IMPORTVIEW.getFxml());
+            titleLabel.setText("Importieren...");
             borderPane.setCenter(root);
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
@@ -90,6 +93,7 @@ public class SliderController implements Initializable {
     void addView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.ADDVIEW.getFxml());
+            titleLabel.setText("Hinzufügen...");
             borderPane.setCenter(root);
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
@@ -100,6 +104,7 @@ public class SliderController implements Initializable {
     void printerView(ActionEvent event) {
         try {
             Parent root = reloadFxml(SwitchScene.PRINTVIEW.getFxml());
+            titleLabel.setText("Drucken...");
             borderPane.setCenter(root);
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);

@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="450.0" prefWidth="700.0" stylesheets="@AddScene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.trs.javafx.memberview.AddSceneController">
    <children>
@@ -147,7 +148,16 @@
                                                 <ComboBox fx:id="eventComboBox" prefWidth="150.0" />
                                              </children>
                                           </HBox>
-                                          <Button fx:id="copyMembersButton" mnemonicParsing="false" text="Übernehmen" />
+                                          <HBox fillHeight="false">
+                                             <children>
+                                                <Label text="Mitglieder auf Liste:" />
+                                                <Label fx:id="memberCountLabel" text="null">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                     <CheckBox fx:id="copyMembersCheckBox" mnemonicParsing="false" text="Mitglieder aus früherer Vorführung kopieren" GridPane.rowIndex="2" />

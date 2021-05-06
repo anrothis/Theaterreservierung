@@ -25,12 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 public class JavafxApplication extends Application {
 
     /**
-     * TODO: Multiview: enum View Enumeration class
-     * 
-     * MAIN("MainFrame.fxml");
-     * 
-     * SECONDVIEW("MainFrame.fxml");
-     * 
      * TODO: Multiview: Cashing different Views
      * 
      * private static Map<View, Parent> cache = new HashMap<>(); if
@@ -74,7 +68,6 @@ public class JavafxApplication extends Application {
             log.info("FINISHED start()");
         } catch (Exception e) {
             log.error("Could not finisch start()", e);
-            log.error(e.getMessage());
         }
 
         /**
@@ -178,37 +171,4 @@ public class JavafxApplication extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
-
-    // @Override
-    // public void start(Stage primaryStage) throws Exception {
-    // this.primaryStage = primaryStage;
-    // this.primaryStage.setTitle("Theater Reservation Service");
-    // this.primaryStage.setScene(getSearchPaneScene());
-    // this.primaryStage.show();
-    // }
-
-    // private SearchPaneScene getSearchPaneScene() {
-    // if (searchPaneScene == null) {
-    // searchPaneScene = new SearchPaneScene();
-    // searchPaneScene.addEventFilter(SceneChangeEvent.GO_TO_CREATE_SCENE, e -> {
-    // log.info("BEGIN Changeing scene to create");
-    // primaryStage.setScene(getCreateScene());
-    // log.info("END Changeing scene to create");
-    // });
-    // }
-    // return searchPaneScene;
-    // }
-
-    // public CreateScene getCreateScene() {
-    // if (createScene == null) {
-    // createScene = new CreateScene();
-    // createScene.addEventFilter(SceneChangeEvent.GO_TO_OVERVIEW_SCENE, e -> {
-    // log.info("BEGIN changeing scene to search");
-    // primaryStage.setScene(getSearchPaneScene());
-    // searchPaneScene.refreshDate();
-    // log.info("END changeing scene to search");
-    // });
-    // }
-    // return createScene;
-    // }
 }
