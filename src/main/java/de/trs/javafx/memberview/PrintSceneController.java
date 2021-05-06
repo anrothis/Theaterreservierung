@@ -95,6 +95,7 @@ public class PrintSceneController implements Initializable {
         log.info("PRINT START");
         if (printerComboBox.getSelectionModel().getSelectedIndex() == -1) {
             Alert alert = new Alert(AlertType.ERROR, "Kein Printer ausgewählt", ButtonType.CLOSE);
+            alert.showAndWait();
             return;
         }
         Printer printer = printerComboBox.getValue();
@@ -111,8 +112,9 @@ public class PrintSceneController implements Initializable {
         int colCounter = 0;
         int colCount = 2;
         int vRowsCount = (size % colCount != 0) ? size / colCount + 1 : size / colCount;
-        int pages = 1;
         int rowsPerPage = rowsPerPageSpinner.getValue();
+
+        int pages = 1;
         if (vRowsCount > rowsPerPage) {
             pages = (vRowsCount % rowsPerPage != 0) ? vRowsCount / rowsPerPage + 1 : vRowsCount / rowsPerPage;
         }
@@ -249,7 +251,7 @@ public class PrintSceneController implements Initializable {
     }
 
     /**
-     * Läd die Liste für die Event ComboBox und wählt den ersten Eintrag aus
+     * Lädt die Liste für die Event ComboBox und wählt den ersten Eintrag aus
      */
     private void loadEvents() {
         eventComboBox.getItems().clear();
@@ -309,7 +311,6 @@ public class PrintSceneController implements Initializable {
 
         this.loadEvents();
         this.generateTableView();
-        // this.loadReservationList();
     }
 
 }
