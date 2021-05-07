@@ -13,7 +13,7 @@ zur weiteren Verarbeitung in unterschiedlichen Formaten bereit zu sellen.
 
 ### Technologie Stack
 
-Zum Aufbau der Benutzeroberfläche wird JavaFX in Kombination von *.fxml* Datein verwendet. Als Persistenzlayer komt eine
+Zum Aufbau der Benutzeroberfläche wird JavaFX in Kombination von *.fxml* Datein verwendet. Als Persistenzlayer kommt eine
 H2 Datenbankstuktur zum Einstatz. Das von Spring Boot bereitgestellt JPARepository fungiert dabei als Data Handler.
 
 ### Getting Started
