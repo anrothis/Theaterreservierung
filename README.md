@@ -19,11 +19,12 @@ H2 Datenbankstuktur zum Einstatz. Das von Spring Boot bereitgestellt JPAReposito
 ### Getting Started
 
 ### Clone
-git clone https://github.com/anrothis/Theaterreservierung
-cd .\Theaterreservierung\
+  git clone https://github.com/anrothis/Theaterreservierung
+
+  cd .\Theaterreservierung\
 
 ### Running
-mvn javafx:run
+  mvn javafx:run
 
 ### Benutzung
 
