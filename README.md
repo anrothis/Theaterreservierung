@@ -26,6 +26,5 @@ H2 Datenbankstuktur zum Einstatz. Das von Spring Boot bereitgestellt JPAReposito
 ### Running
   mvn javafx:run
 
-### Benutzung
 
 
