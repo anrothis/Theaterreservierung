@@ -26,9 +26,12 @@ Getting Started
 
 Clone
 git clone https://github.com/anrothis/Theaterreservierung
-cd cd .\Theaterreservierung\
+cd .\Theaterreservierung\
 
 Running
 mvn javafx:run
-  
+
+Benutzung
+
+
 
