@@ -55,6 +55,9 @@ public class ImportSceneController {
     private FileChooser fileChooser;
     private File selectedFile;
 
+    /**
+     * Initalisierung der ActionListener
+     */
     @FXML
     void initialize() {
 

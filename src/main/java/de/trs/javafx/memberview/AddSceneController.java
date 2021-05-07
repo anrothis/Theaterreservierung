@@ -96,6 +96,10 @@ public class AddSceneController implements Initializable {
     private DbService dbService;
     private ObservableList<Event> eventsAsObservable;
 
+    /**
+     * AddMember Funktion zum Übernehmen der eingegebenen Mitgliederdaten in die
+     * Datenbank
+     */
     @FXML
     private void addMember() {
         Mitglied mitglied = new Mitglied(lastnameTextField.getText(), firstnameTextField.getText(),
@@ -121,6 +125,10 @@ public class AddSceneController implements Initializable {
         }
     }
 
+    /**
+     * AddEvent Funktion zum Übernehmen der eingegebenen Veranstaltungsdaten in die
+     * Datenbank
+     */
     @FXML
     private void addEvent() {
 
@@ -158,6 +166,9 @@ public class AddSceneController implements Initializable {
         this.refreshList();
     }
 
+    /**
+     * Löschen der Mitgliederdatenfelder
+     */
     @FXML
     private void clearMemberTextFields() {
         lastnameTextField.setText("");
@@ -171,6 +182,9 @@ public class AddSceneController implements Initializable {
         seatAltTextField.setText("");
     }
 
+    /**
+     * Löschen der Veranstaltungsdatenfelder
+     */
     @FXML
     private void clearEventTextFields() {
         eventnameTextField.setText("");
@@ -179,6 +193,9 @@ public class AddSceneController implements Initializable {
 
     }
 
+    /**
+     * Initialisierung der Standardparameter und ActionListener
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         copyMembersCheckBox.setSelected(true);

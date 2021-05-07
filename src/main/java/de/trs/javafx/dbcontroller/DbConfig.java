@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import de.trs.javafx.model.CsvHandler;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Configuration class for testing
+ */
 @Slf4j
 @Configuration
 public class DbConfig {
@@ -17,7 +20,7 @@ public class DbConfig {
 
             // memberRepository.saveAll(CsvHandler.ParseMemberList.getMemberfromCSV("members.csv",
             // true));
-            memberRepository.saveAll(CsvHandler.ParseMemberList.getMemberfromCSV("test1.csv", true, ';'));
+            memberRepository.saveAll(CsvHandler.ParseMemberList.getMemberfromCSV("members.csv", true, ','));
             eventRepository.saveAll(CsvHandler.ParseEventList.getEventfromCSV("eventsLong.csv", true, ','));
 
         };

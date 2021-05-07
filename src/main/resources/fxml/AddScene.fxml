@@ -108,6 +108,7 @@
                                  <rowConstraints>
                                     <RowConstraints fillHeight="false" minHeight="10.0" />
                                     <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="50.0" />
+                                    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="50.0" />
                                     <RowConstraints fillHeight="false" />
                                     <RowConstraints fillHeight="false" />
                                  </rowConstraints>
@@ -134,7 +135,7 @@
                                           <Label text="Location" />
                                        </children>
                                     </VBox>
-                                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
                                           <HBox fillHeight="false">
                                              <children>
@@ -160,13 +161,15 @@
                                           </HBox>
                                        </children>
                                     </VBox>
-                                    <CheckBox fx:id="copyMembersCheckBox" mnemonicParsing="false" text="Mitglieder aus früherer Vorführung kopieren" GridPane.rowIndex="2" />
-                                    <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <CheckBox fx:id="copyMembersCheckBox" mnemonicParsing="false" text="Mitglieder aus früherer Vorführung kopieren" GridPane.rowIndex="3" />
+                                    <HBox alignment="BASELINE_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
                                           <Button fx:id="resetEventButton" mnemonicParsing="false" onAction="#clearEventTextFields" text="Zurücksetzen" />
                                           <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEvent" text="Anlegen" />
                                        </children>
                                     </HBox>
+                                    <Separator prefWidth="200.0" GridPane.rowIndex="2" />
+                                    <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

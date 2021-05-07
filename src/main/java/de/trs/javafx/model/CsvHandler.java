@@ -144,7 +144,7 @@ public class CsvHandler {
         }
 
         /**
-         * wandelt ein übergebenes {@Mitglied} Object Liste in eine HashMap<Long,
+         * Wandelt eine übergebene {@Mitglied} Liste in eine HashMap<Long,
          * HashMap<String, String>> und übergibt diese an den CSVHandler.csvSave().
          * 
          * @param mitglieder Optional List von Mitgliedern

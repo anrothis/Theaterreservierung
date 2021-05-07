@@ -68,6 +68,12 @@ public class TextViewController extends AnchorPane implements Initializable {
 
     private ObservableList<Event> currentEvents;
 
+    /**
+     * Filtert die Mitgliederliste, anhand der Textfeldeingabe. Dabei wird der
+     * Filterstring an den Leerstellen gesplittet und über ein RegEx Muster mit den
+     * Mitglied.toString() Daten abgeglichen.
+     */
+    // TODO: BUG: Filter + "nur neu" Checkbox!
     @FXML
     private void filterMemberTableView() {
         memberTableView.getItems().clear();
@@ -91,6 +97,10 @@ public class TextViewController extends AnchorPane implements Initializable {
         memberTableView.getItems().setAll(membersFiltered);
     }
 
+    /**
+     * Exportiert die aktuelle Mitglieder- und Reservierungsliste in ein CSV Datei
+     */
+    // TODO: Exportfunktion weiter ausbauen
     @FXML
     private void exportMembersToCSV() {
         log.info("EXPORTING CSV MEMBERLIST");
@@ -239,6 +249,9 @@ public class TextViewController extends AnchorPane implements Initializable {
         log.info("END Mitglied loeschen");
     }
 
+    /**
+     * Löscht ein ausgewähltes Event aus der eventTableView
+     */
     @FXML
     private void deleteEvent() {
 
@@ -399,7 +412,7 @@ public class TextViewController extends AnchorPane implements Initializable {
      */
     private void generateTableView() {
         /**
-         * initialisieren der Mitglieder TabelView
+         * initialisieren der Mitglieder und Event TabelView
          */
         List<String> columnTitles = List.of("Sitzplatz", "Alt. Sitzplatz", "Nachname", "Vorname", "Strasse", "PLZ",
                 "Stadt", "Telefon", "Email");
@@ -419,7 +432,6 @@ public class TextViewController extends AnchorPane implements Initializable {
             eventTabel.setCellValueFactory(new PropertyValueFactory<Mitglied, String>(s));
             eventTableView.getColumns().add(eventTabel);
         }
-
         memberTableView.setRowFactory(new Callback<TableView<Mitglied>, TableRow<Mitglied>>() {
             @Override
             public TableRow<Mitglied> call(TableView<Mitglied> tableView) {
@@ -440,11 +452,13 @@ public class TextViewController extends AnchorPane implements Initializable {
                 };
             }
         });
-
         this.reloadMemberView();
         this.reloadEventView();
     }
 
+    /**
+     * Initialisierung der Startvariablen und ActionListener
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         eventDatePicker.setValue(LocalDate.now());

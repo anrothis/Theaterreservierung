@@ -28,8 +28,6 @@ public interface MemberRepository extends JpaRepository<Mitglied, Long> {
      *        definieren.
      * @return
      */
-    @Query("SELECT m.vName,m.nName FROM Mitglied m")
-    List<String> listUsers();
 
     /**
      * Datenbankabfrage mit automatisch generierter SQL Abfrage
@@ -48,6 +46,11 @@ public interface MemberRepository extends JpaRepository<Mitglied, Long> {
     @Query(value = "select * from mitglied m inner join reservation r on m.member_id = r.member_id  where r.Event_id = ?1)", nativeQuery = true)
     List<Mitglied> getReservationList(Long id);
 
+    /**
+     * Member deletion sql request from specific event reservaionlist by member id
+     * 
+     * @param id
+     */
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM RESERVATION WHERE MEMBER_ID = :ID", nativeQuery = true)

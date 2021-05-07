@@ -152,6 +152,8 @@ public class PrintSceneController implements Initializable {
         }
         printerJob.endJob();
 
+        // TODO: ScrollPane prefHeight anpassen dass Scrollbar volständig angezeigt
+        // wird.
         Group root = new Group();
         Scene printScene = new Scene(root);
         Stage printPage = new Stage(StageStyle.DECORATED);

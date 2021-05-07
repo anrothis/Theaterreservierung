@@ -13,9 +13,13 @@ import de.trs.javafx.model.Mitglied;
 import javafx.collections.ObservableList;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * DbService
+ * 
+ * Serviceclass for userelement interaction with the datebase repository
+ */
 @Slf4j
 @Service
-// @Transactional
 public class DbService {
 
     private final MemberRepository memberRepository;
@@ -28,9 +32,10 @@ public class DbService {
     }
 
     /**
-     * Member Database requests
+     * Member request of all members
+     * 
+     * @return List<Mitglied> of all members in database
      */
-
     public List<Mitglied> getMembers() {
         return memberRepository.findAll();
     }
@@ -41,17 +46,31 @@ public class DbService {
         return reservationList;
     }
 
+    /**
+     * Member additio request
+     * 
+     * @param mitglied new member object
+     */
     public void addMember(Mitglied mitglied) {
         memberRepository.save(mitglied);
     }
 
+    /**
+     * Member update request by id
+     * 
+     * @param mitglied updated member object
+     * @param id       id of member to update
+     */
     @Transactional
     public void updateMember(Mitglied mitglied, Long id) {
         // TODO: update Memeber
     }
 
-    // @Modifying
-    // @Transactional()
+    /**
+     * Member deletion request by member
+     * 
+     * @param selectedItem Member object
+     */
     public void deleteMember(Mitglied selectedItem) {
         log.info("DELETE MEMBER");
 
@@ -59,6 +78,12 @@ public class DbService {
         memberRepository.delete(selectedItem);
     }
 
+    /**
+     * Event request for the reservationlist by event
+     * 
+     * @param event Event object
+     * @return List of members
+     */
     public List<Mitglied> getReservationList(Event event) {
 
         List<Mitglied> reservationList = event.getReservationsList();
@@ -66,7 +91,7 @@ public class DbService {
     }
 
     /**
-     * Event Database requests
+     * Event deletion Database requests by Event
      */
     public void deleteEvent(Event selectedEvent) {
         log.info("DELETE EVENT");
@@ -74,14 +99,31 @@ public class DbService {
         eventRepository.delete(selectedEvent);
     }
 
+    /**
+     * Event List request by date
+     * 
+     * @param date SQL Date
+     * @return Event list on date
+     */
     public List<Event> getEventsByDate(Date date) {
         return eventRepository.findByPerformanceDate(date);
     }
 
+    /**
+     * Event addition to database by event
+     * 
+     * @param event
+     */
     public void addEvent(Event event) {
         eventRepository.save(event);
     }
 
+    /**
+     * Event reservationlist update by event
+     * 
+     * @param event
+     * @param reservationList
+     */
     @Transactional
     public void updateReservationList(Event event, ObservableList<Mitglied> reservationList) {
         log.info("UPDATING RESERVATIONLIST");
@@ -95,30 +137,11 @@ public class DbService {
     }
 
     /**
-     * Testfunktionen
+     * Event request of all events
+     * 
+     * @return List<Event> of all events
      */
-    public List<String> getMemberName() {
-        return memberRepository.listUsers();
-    }
-
-    public Mitglied getMemberBySeat(String nName) {
-        return memberRepository.findBySeatOrderBySeatAsc(nName);
-    }
-
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
-
-    public List<Event> getDate() {
-        return eventRepository.findDate();
-    }
-
-    public List<Event> getEventsByName(String name) {
-        return eventRepository.findByName(name);
-    }
-
-    public List<Event> getEventsByLocation(String location) {
-        return eventRepository.findByLocation(location);
-    }
-
 }

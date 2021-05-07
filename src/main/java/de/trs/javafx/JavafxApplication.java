@@ -137,6 +137,13 @@ public class JavafxApplication extends Application {
         log.info("INITIALIZATION JavaFx got initialized");
     }
 
+    /**
+     * Funktion zum laden der UI Fxml Dateien
+     * 
+     * @param fxml den Namen der zu ladenden Fxml Datei
+     * @return gibt eine Parent Objekt zurück
+     * @throws IOException
+     */
     private Parent fxmlLoader(String fxml) throws IOException {
         Parent root;
         log.info("START LOADING FXML: ");
@@ -158,6 +165,10 @@ public class JavafxApplication extends Application {
         return root;
     }
 
+    /**
+     * kümmert sich beim beenden der Applikation um ein sauberes beenden aller
+     * offenen Element
+     */
     @Override
     public void stop() throws Exception {
         context.close();

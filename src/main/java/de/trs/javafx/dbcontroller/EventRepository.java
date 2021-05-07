@@ -15,20 +15,18 @@ import de.trs.javafx.model.Event;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    List<Event> findByName(String name);
-
+    /**
+     * 
+     * @param performanceDate
+     * @return
+     */
     List<Event> findByPerformanceDate(Date performanceDate);
 
-    // @Query("SELECT e FROM Event e where performanceDate between '2021-01-01' and
-    // '2021-02-01'")
-    @Query("SELECT e FROM Event e where performanceDate = '2021-01-01'")
-    List<Event> findDate();
-
-    List<Event> findByLocation(String location);
-
-    @Query("SELECT name, location FROM Event")
-    List<String> getEventsAsStrings();
-
+    /**
+     * Event sql request to delete reservationlist for specific event id
+     * 
+     * @param id
+     */
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM RESERVATION WHERE EVENT_ID = :ID", nativeQuery = true)

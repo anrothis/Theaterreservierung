@@ -24,6 +24,9 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Slider Controller zum Steuern der UI Frame Funktionen
+ */
 @Slf4j
 @Controller
 public class SliderController implements Initializable {
@@ -44,7 +47,7 @@ public class SliderController implements Initializable {
     private double x, y;
 
     /**
-     * depricated: getting window position
+     * getting window position
      * 
      * @param event
      */
@@ -55,7 +58,7 @@ public class SliderController implements Initializable {
     }
 
     /**
-     * depricated: moving window by mousclick
+     * moving window by mousclick
      * 
      * @param event
      */
@@ -67,8 +70,11 @@ public class SliderController implements Initializable {
         Stage.getWindows().get(0).setY(ys);
     }
 
+    /**
+     * Funktion zum Laden der Terminverwaltungsansicht
+     */
     @FXML
-    void mainView(ActionEvent event) {
+    void mainView() {
         try {
             Parent root = reloadFxml(SwitchScene.TABLEVIEW.getFxml());
             titleLabel.setText("Terminverwaltung");
@@ -78,8 +84,11 @@ public class SliderController implements Initializable {
         }
     }
 
+    /**
+     * Funktion zum Laden der Importansicht
+     */
     @FXML
-    void importView(ActionEvent event) {
+    void importView() {
         try {
             Parent root = reloadFxml(SwitchScene.IMPORTVIEW.getFxml());
             titleLabel.setText("Importieren...");
@@ -89,8 +98,11 @@ public class SliderController implements Initializable {
         }
     }
 
+    /**
+     * Funktion zum Laden der Hizufügenansicht
+     */
     @FXML
-    void addView(ActionEvent event) {
+    void addView() {
         try {
             Parent root = reloadFxml(SwitchScene.ADDVIEW.getFxml());
             titleLabel.setText("Hinzufügen...");
@@ -100,8 +112,11 @@ public class SliderController implements Initializable {
         }
     }
 
+    /**
+     * Funktion zum Laden der Druckansicht
+     */
     @FXML
-    void printerView(ActionEvent event) {
+    void printerView() {
         try {
             Parent root = reloadFxml(SwitchScene.PRINTVIEW.getFxml());
             titleLabel.setText("Drucken...");
@@ -109,15 +124,6 @@ public class SliderController implements Initializable {
         } catch (Exception e) {
             log.error("ERROR Loading FXML TableView", e);
         }
-    }
-
-    @FXML
-    void printReservation() {
-        log.info("PRINT START");
-        PrinterJob printerJob = PrinterJob.createPrinterJob();
-        printerJob.showPageSetupDialog(null);
-        printerJob.showPrintDialog(null);
-
     }
 
     /**
@@ -139,6 +145,10 @@ public class SliderController implements Initializable {
         return loader.load();
     }
 
+    /**
+     * Initialisierung der Standardparameter und ActionListenern Laden des
+     * Terminverwaltungsframes
+     */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         Menu.setVisible(false);
@@ -170,7 +180,7 @@ public class SliderController implements Initializable {
             });
         });
         // TODO: Column initialisation
-        this.mainView(null);
+        this.mainView();
 
     }
 
